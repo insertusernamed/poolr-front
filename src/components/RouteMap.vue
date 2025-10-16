@@ -1,0 +1,159 @@
+<template>
+    <div class="route-planner-container">
+        <div class="map-section">
+            <l-map ref="map" :zoom="zoom" :center="center" @click="onMapClick" class="map"
+                aria-label="Interactive map for route planning">
+                <l-tile-layer :url="'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png'"
+                    :attribution="attribution" :subdomains="'abcd'" :max-zoom="20" />
+
+                <!-- Bounds rectangle for available routing area, I dont think this is correct but its what the OSM data says the bounding box is -->
+                <l-rectangle :bounds="routingBounds" :color="'#ff7800'" :weight="2" :fill="false" :dashArray="'5, 10'">
+                    <l-popup>Available routing area</l-popup>
+                </l-rectangle>
+
+                <!-- Waypoint markers -->
+                <l-marker v-for="(waypoint, index) in waypoints" :key="index" :lat-lng="[waypoint.lat, waypoint.lon]">
+                    <l-icon :icon-url="getMarkerIcon(getMarkerColor(index))" :icon-size="[25, 41]"
+                        :icon-anchor="[12, 41]" />
+                    <l-popup>Waypoint {{ index + 1 }}</l-popup>
+                </l-marker>
+
+                <!-- Route polyline segments with different colors. TODO - make the backend actually send where each segment starts and ends -->
+                <template v-if="routeData && routeSegments.length > 0">
+                    <l-polyline v-for="(segment, index) in routeSegments" :key="index" :lat-lngs="segment.coordinates"
+                        :color="segment.color" :weight="5" :opacity="0.7" />
+                </template>
+            </l-map>
+        </div>
+        <InfoPanel />
+    </div>
+</template>
+
+<script setup>
+import { ref, computed, onMounted, nextTick } from 'vue'
+import { LMap, LTileLayer, LMarker, LPolyline, LPopup, LIcon, LRectangle } from '@vue-leaflet/vue-leaflet'
+import 'leaflet/dist/leaflet.css'
+import { useMapStore } from '../stores/mapStore'
+import InfoPanel from './InfoPanel.vue'
+
+const mapStore = useMapStore()
+const waypoints = computed(() => mapStore.waypoints)
+const routeData = computed(() => mapStore.routeData)
+const map = ref(null)
+
+// Map config
+const zoom = ref(14)
+const center = ref([44.6087, -79.4207]) // orillia
+
+// Attribution string
+const attribution = ref('&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>')
+
+// Routing bounds from backend
+const routingBounds = ref([
+    [41.4590702, -95.3687497],
+    [56.1330108, -74.3207587]
+])
+
+// Fix map size after mounting
+onMounted(() => {
+    nextTick(() => {
+        if (map.value && map.value.leafletObject) {
+            setTimeout(() => {
+                map.value.leafletObject.invalidateSize()
+            }, 100)
+        }
+    })
+})
+
+// Compute route segments with different colors
+const routeSegments = computed(() => {
+    if (!routeData.value || !routeData.value.coordinates) return []
+
+    const segments = []
+    const colors = ['#00ff00', '#ff6600'] // Green for segment 1->2, Orange for segment 2->3
+
+    // Try to split route into segments based on waypoints, ill fix it later
+    const coords = routeData.value.coordinates
+    if (coords.length < 2) return []
+
+    // If we have waypoint information in the response, use it
+    // Otherwise, approximate by splitting the route in half
+    if (waypoints.value.length === 3) {
+        const midPoint = Math.floor(coords.length / 2)
+
+        segments.push({
+            coordinates: coords.slice(0, midPoint + 1),
+            color: colors[0] // Green for waypoint 1 -> 2
+        })
+
+        segments.push({
+            coordinates: coords.slice(midPoint),
+            color: colors[1] // Orange for waypoint 2 -> 3
+        })
+    } else {
+        // Fallback: show entire route in blue
+        segments.push({
+            coordinates: coords,
+            color: '#0000ff'
+        })
+    }
+
+    return segments
+})
+
+const onMapClick = (event) => {
+    const { lat, lng } = event.latlng
+    mapStore.addWaypoint({ lat, lon: lng })
+}
+
+// Helper to get marker color based on index
+const getMarkerColor = (index) => {
+    const colors = ['green', 'orange', 'red']
+    return colors[index] || 'blue'
+}
+
+// Helper to get marker icon (default Leaflet markers)
+const getMarkerIcon = (color) => {
+    return `https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-${color}.png`
+}
+</script>
+
+<style scoped>
+.route-planner-container {
+    display: flex;
+    gap: 15px;
+    width: 100%;
+    height: calc(100vh - 250px);
+    min-height: 500px;
+    max-width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.map-section {
+    flex: 1;
+    min-width: 0;
+    height: 100%;
+}
+
+.map {
+    width: 100%;
+    height: 100%;
+}
+
+@media (max-width: 768px) {
+    .route-planner-container {
+        flex-direction: column;
+        height: auto;
+        min-height: 0;
+        padding: 10px;
+        gap: 10px;
+    }
+
+    .map-section {
+        height: 50vh;
+        min-height: 300px;
+        width: 100%;
+    }
+}
+</style>
