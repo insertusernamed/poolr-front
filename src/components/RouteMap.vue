@@ -6,10 +6,10 @@
                 <l-tile-layer :url="'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png'"
                     :attribution="attribution" :subdomains="'abcd'" :max-zoom="20" />
 
-                <!-- Bounds rectangle for available routing area, I dont think this is correct but its what the OSM data says the bounding box is -->
-                <l-rectangle :bounds="routingBounds" :color="'#ff7800'" :weight="2" :fill="false" :dashArray="'5, 10'">
+                <!-- Polygon for available routing area -->
+                <l-polygon :lat-lngs="routingAreaPolygon" :color="'#FF0000FF'" :weight="2" :fill="false">
                     <l-popup>Available routing area</l-popup>
-                </l-rectangle>
+                </l-polygon>
 
                 <!-- Waypoint markers -->
                 <l-marker v-for="(waypoint, index) in waypoints" :key="index" :lat-lng="[waypoint.lat, waypoint.lon]">
@@ -18,7 +18,7 @@
                     <l-popup>Waypoint {{ index + 1 }}</l-popup>
                 </l-marker>
 
-                <!-- Route polyline segments with different colors. TODO - make the backend actually send where each segment starts and ends -->
+                <!-- Route polyline segments with different colors -->
                 <template v-if="routeData && routeSegments.length > 0">
                     <l-polyline v-for="(segment, index) in routeSegments" :key="index" :lat-lngs="segment.coordinates"
                         :color="segment.color" :weight="5" :opacity="0.7" />
@@ -31,10 +31,11 @@
 
 <script setup>
 import { ref, computed, onMounted, nextTick } from 'vue'
-import { LMap, LTileLayer, LMarker, LPolyline, LPopup, LIcon, LRectangle } from '@vue-leaflet/vue-leaflet'
+import { LMap, LTileLayer, LMarker, LPolyline, LPopup, LIcon, LRectangle, LPolygon } from '@vue-leaflet/vue-leaflet'
 import 'leaflet/dist/leaflet.css'
 import { useMapStore } from '../stores/mapStore'
 import InfoPanel from './InfoPanel.vue'
+import { routingAreaPolygon } from '../data/routingAreaPolygon.js'
 
 const mapStore = useMapStore()
 const waypoints = computed(() => mapStore.waypoints)
@@ -47,12 +48,6 @@ const center = ref([44.6087, -79.4207]) // orillia
 
 // Attribution string
 const attribution = ref('&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>')
-
-// Routing bounds from backend
-const routingBounds = ref([
-    [41.4590702, -95.3687497],
-    [56.1330108, -74.3207587]
-])
 
 // Fix map size after mounting
 onMounted(() => {
