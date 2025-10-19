@@ -13,39 +13,51 @@ const router = createRouter({
         {
             path: '/',
             name: 'home',
-            component: HomePage
+            component: HomePage,
+            meta: { title: 'Home' }
         },
         {
             path: '/about',
             name: 'about',
-            component: AboutPage
+            component: AboutPage,
+            meta: { title: 'About' }
         },
         {
             path: '/offer-ride',
             name: 'offerRide',
-            component: OfferRidePage
+            component: OfferRidePage,
+            meta: { title: 'Offer Ride' }
         },
         {
             path: '/find-ride',
             name: 'findRide',
-            component: FindRidePage
+            component: FindRidePage,
+            meta: { title: 'Find Ride' }
         },
         {
             path: '/login',
             name: 'login',
-            component: LoginPage
+            component: LoginPage,
+            meta: { title: 'Login' }
         },
         {
             path: '/register',
             name: 'register',
-            component: RegisterPage
+            component: RegisterPage,
+            meta: { title: 'Register' }
         },
         {
             path: '/map',
             name: 'map',
-            component: MapPage
+            component: MapPage,
+            meta: { title: 'Map' }
         }
     ]
+})
+
+router.beforeEach((to, from, next) => {
+    document.title = `Poolr - ${to.meta.title}`
+    next()
 })
 
 export default router
