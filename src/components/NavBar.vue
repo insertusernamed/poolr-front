@@ -25,7 +25,7 @@
                     </router-link>
                 </div>
 
-                <div class="hidden md:flex items-center space-x-3">
+                <div v-if="username == undefined" class="hidden md:flex items-center space-x-3">
                     <router-link to="/login"
                         class="text-cool-white hover:text-electric-blue transition-colors font-medium px-4 py-2">
                         Log in
@@ -34,6 +34,16 @@
                         class="bg-electric-blue hover:bg-deep-blue text-white px-5 py-2 rounded-lg font-medium transition-all shadow-md hover:shadow-lg">
                         Sign up
                     </router-link>
+                </div>
+                <div v-else class="hidden md:flex items-center space-x-3">
+                    
+                    <router-link to="/me"
+                        class="bg-electric-blue hover:bg-deep-blue text-white px-5 py-2 rounded-lg font-medium transition-all shadow-md hover:shadow-lg">
+                        {{username}}
+                    </router-link>
+                    <button @click="logout" class="text-cool-white hover:text-electric-blue transition-colors font-medium px-4 py-2">
+                        Log out
+                    </button>
                 </div>
 
                 <div class="md:hidden">
@@ -66,11 +76,17 @@
                             class="text-cool-white hover:text-electric-blue transition-colors font-medium px-2 py-2">
                             About
                         </router-link>
-                        <div class="border-t border-slate-blue pt-3 space-y-3">
+                        <div v-if="username == undefined" class="border-t border-slate-blue pt-3 space-y-3">
                             <router-link to="/login" @click="closeMobileMenu"
                                 class="block text-cool-white hover:text-electric-blue transition-colors font-medium px-2 py-2">
                                 Log in
                             </router-link>
+                            <router-link to="/register" @click="closeMobileMenu"
+                                class="block bg-electric-blue hover:bg-deep-blue text-white px-5 py-2 rounded-lg font-medium transition-all shadow-md text-center">
+                                Sign up
+                            </router-link>
+                        </div>
+                        <div v-else class="border-t border-slate-blue pt-3 space-y-3">
                             <router-link to="/register" @click="closeMobileMenu"
                                 class="block bg-electric-blue hover:bg-deep-blue text-white px-5 py-2 rounded-lg font-medium transition-all shadow-md text-center">
                                 Sign up
@@ -84,7 +100,17 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { storeToRefs } from 'pinia'
+import { ref, watch, onMounted} from 'vue'
+import { useIdentityStore } from '../stores/identityStore'
+import { useRouter } from 'vue-router'
+
+const router = useRouter();
+const identityStore = useIdentityStore();
+const { username } = storeToRefs(identityStore)
+onMounted(() => {
+  identityStore.getIdentity()
+})
 
 const isMobileMenuOpen = ref(false)
 
@@ -94,5 +120,11 @@ const toggleMobileMenu = () => {
 
 const closeMobileMenu = () => {
     isMobileMenuOpen.value = false
+}
+
+function logout(){
+    identityStore.clearIdentity();
+    localStorage.removeItem('token');
+    router.push('/')
 }
 </script>

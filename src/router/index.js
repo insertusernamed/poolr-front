@@ -7,6 +7,7 @@ import LoginPage from '../views/LoginPage.vue'
 import RegisterPage from '../views/RegisterPage.vue'
 import MapPage from '../views/MapPage.vue'
 import ErrorPage from '../views/ErrorPage.vue'
+import MyProfilePage from '../views/MyProfilePage.vue'
 
 const router = createRouter({
     history: createWebHistory(),
@@ -52,6 +53,12 @@ const router = createRouter({
             name: 'map',
             component: MapPage,
             meta: { title: 'Map' }
+        },
+        {
+            path: '/me',
+            name: 'MyProfile',
+            component: MyProfilePage,
+            meta: { title: 'My Profile' }
         },
         {
             path: '/:pathMatch(.*)*',
