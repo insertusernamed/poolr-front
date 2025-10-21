@@ -5,43 +5,44 @@
                 <!-- so we have to put the logo Jen made here somewhere -->
                 <div class="flex-shrink-0">
                     <router-link to="/"
-                        class="text-2xl font-bold text-white hover:text-electric-blue transition flex items-center">
+                        class="text-2xl font-bold text-white hover:text-electric-blue transition flex items-center pushButton">
                         Poolr
                     </router-link>
                 </div>
 
                 <div class="hidden md:flex items-center space-x-8">
                     <router-link to="/find-ride"
-                        class="text-cool-white hover:text-electric-blue transition-colors font-medium">
+                        class="text-cool-white hover:text-electric-blue transition-colors font-medium pushButton">
                         Ride
                     </router-link>
                     <router-link to="/offer-ride"
-                        class="text-cool-white hover:text-electric-blue transition-colors font-medium">
+                        class="text-cool-white hover:text-electric-blue transition-colors font-medium pushButton">
                         Drive
                     </router-link>
                     <router-link to="/about"
-                        class="text-cool-white hover:text-electric-blue transition-colors font-medium">
+                        class="text-cool-white hover:text-electric-blue transition-colors font-medium pushButton">
                         About
                     </router-link>
                 </div>
 
                 <div v-if="username == undefined" class="hidden md:flex items-center space-x-3">
                     <router-link to="/login"
-                        class="text-cool-white hover:text-electric-blue transition-colors font-medium px-4 py-2">
+                        class="text-cool-white hover:text-electric-blue transition-colors font-medium px-4 py-2 pushButton">
                         Log in
                     </router-link>
                     <router-link to="/register"
-                        class="bg-electric-blue hover:bg-deep-blue text-white px-5 py-2 rounded-lg font-medium transition-all shadow-md hover:shadow-lg">
+                        class="bg-electric-blue hover:bg-deep-blue text-white px-5 py-2 rounded-lg font-medium transition-all shadow-md hover:shadow-lg pushButton">
                         Sign up
                     </router-link>
                 </div>
                 <div v-else class="hidden md:flex items-center space-x-3">
-                    
+
                     <router-link to="/me"
-                        class="bg-electric-blue hover:bg-deep-blue text-white px-5 py-2 rounded-lg font-medium transition-all shadow-md hover:shadow-lg">
-                        {{username}}
+                        class="bg-electric-blue hover:bg-deep-blue text-white px-5 py-2 rounded-lg font-medium transition-all shadow-md hover:shadow-lg pushButton">
+                        {{ username }}
                     </router-link>
-                    <button @click="logout" class="text-cool-white hover:text-electric-blue transition-colors font-medium px-4 py-2">
+                    <button @click="logout"
+                        class="text-cool-white hover:text-electric-blue transition-colors font-medium px-4 py-2 pushButton">
                         Log out
                     </button>
                 </div>
@@ -65,30 +66,30 @@
                 <div v-show="isMobileMenuOpen" class="md:hidden pb-4">
                     <div class="flex flex-col space-y-3 pt-2">
                         <router-link to="/find-ride" @click="closeMobileMenu"
-                            class="text-cool-white hover:text-electric-blue transition-colors font-medium px-2 py-2">
+                            class="text-cool-white hover:text-electric-blue transition-colors font-medium px-2 py-2 pushButton">
                             Ride
                         </router-link>
                         <router-link to="/offer-ride" @click="closeMobileMenu"
-                            class="text-cool-white hover:text-electric-blue transition-colors font-medium px-2 py-2">
+                            class="text-cool-white hover:text-electric-blue transition-colors font-medium px-2 py-2 pushButton">
                             Drive
                         </router-link>
                         <router-link to="/about" @click="closeMobileMenu"
-                            class="text-cool-white hover:text-electric-blue transition-colors font-medium px-2 py-2">
+                            class="text-cool-white hover:text-electric-blue transition-colors font-medium px-2 py-2 pushButton">
                             About
                         </router-link>
                         <div v-if="username == undefined" class="border-t border-slate-blue pt-3 space-y-3">
                             <router-link to="/login" @click="closeMobileMenu"
-                                class="block text-cool-white hover:text-electric-blue transition-colors font-medium px-2 py-2">
+                                class="block text-cool-white hover:text-electric-blue transition-colors font-medium px-2 py-2 pushButton">
                                 Log in
                             </router-link>
                             <router-link to="/register" @click="closeMobileMenu"
-                                class="block bg-electric-blue hover:bg-deep-blue text-white px-5 py-2 rounded-lg font-medium transition-all shadow-md text-center">
+                                class="block bg-electric-blue hover:bg-deep-blue text-white px-5 py-2 rounded-lg font-medium transition-all shadow-md text-center pushButton">
                                 Sign up
                             </router-link>
                         </div>
                         <div v-else class="border-t border-slate-blue pt-3 space-y-3">
                             <router-link to="/register" @click="closeMobileMenu"
-                                class="block bg-electric-blue hover:bg-deep-blue text-white px-5 py-2 rounded-lg font-medium transition-all shadow-md text-center">
+                                class="block bg-electric-blue hover:bg-deep-blue text-white px-5 py-2 rounded-lg font-medium transition-all shadow-md text-center pushButton">
                                 Sign up
                             </router-link>
                         </div>
@@ -101,7 +102,7 @@
 
 <script setup>
 import { storeToRefs } from 'pinia'
-import { ref, watch, onMounted} from 'vue'
+import { ref, onMounted } from 'vue'
 import { useIdentityStore } from '../stores/identityStore'
 import { useRouter } from 'vue-router'
 
@@ -109,7 +110,7 @@ const router = useRouter();
 const identityStore = useIdentityStore();
 const { username } = storeToRefs(identityStore)
 onMounted(() => {
-  identityStore.getIdentity()
+    identityStore.getIdentity()
 })
 
 const isMobileMenuOpen = ref(false)
@@ -122,7 +123,7 @@ const closeMobileMenu = () => {
     isMobileMenuOpen.value = false
 }
 
-function logout(){
+function logout() {
     identityStore.clearIdentity();
     localStorage.removeItem('token');
     router.push('/')

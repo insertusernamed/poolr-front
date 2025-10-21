@@ -12,6 +12,14 @@
     --color-pure-white: #ffffff;
 }
 
+.pushButton {
+    transition: transform 0.1s ease;
+}
+
+.pushButton:active {
+    transform: scale(0.95);
+}
+
 .toast-fade-enter {
     animation: fadeIn 0.3s ease-in-out;
 }
