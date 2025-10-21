@@ -5,6 +5,8 @@ import 'leaflet/dist/leaflet.css'
 import L from 'leaflet'
 import { createPinia } from 'pinia'
 import router from './router'
+import Vue3Toastify from 'vue3-toastify';
+import 'vue3-toastify/dist/index.css';
 
 delete L.Icon.Default.prototype._getIconUrl
 L.Icon.Default.mergeOptions({
@@ -18,4 +20,5 @@ const pinia = createPinia()
 const app = createApp(App)
 app.use(pinia)
 app.use(router)
+app.use(Vue3Toastify);
 app.mount('#app')

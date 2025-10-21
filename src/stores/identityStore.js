@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import apiClient from '../utils/apiClient'
+import { showToast } from '../utils/BaseToast'
 
 export const useIdentityStore = defineStore('identity', {
     state: () => ({
@@ -21,10 +22,11 @@ export const useIdentityStore = defineStore('identity', {
                 this.phoneNumber = response.data.phoneNumber;
                 this.vehicleModel = response.data.vehicleModel;
             } catch (error) {
-                console.error('Error fetching username:', error)
+                console.error('Error fetching user information:', error)
+                showToast('Failed to fetch user information', 'error');
             }
         },
-        setIdentity(user){
+        setIdentity(user) {
             this.id = user.id;
             this.realName = user.realName;
             this.username = user.username;
@@ -32,7 +34,7 @@ export const useIdentityStore = defineStore('identity', {
             this.phoneNumber = user.phoneNumber;
             this.vehicleModel = user.vehicleModel;
         },
-        async postIdentity(user){
+        async postIdentity(user) {
             try {
                 const response = await apiClient.put('/api/user/me', user)
                 this.id = response.data.id;
@@ -41,13 +43,14 @@ export const useIdentityStore = defineStore('identity', {
                 this.email = response.data.email;
                 this.phoneNumber = response.data.phoneNumber;
                 this.vehicleModel = response.data.vehicleModel;
+                showToast('User information updated successfully', 'success');
                 return response;
             } catch (error) {
                 console.error('Failed to update user info', error)
                 return null;
             }
         },
-        clearIdentity(){
+        clearIdentity() {
             this.id = null
             this.realName = null
             this.username = null

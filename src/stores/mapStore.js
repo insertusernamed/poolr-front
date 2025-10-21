@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import apiClient from '../utils/apiClient'
+import { showToast } from '../utils/BaseToast'
 
 export const useMapStore = defineStore('map', {
     state: () => ({
@@ -24,7 +25,7 @@ export const useMapStore = defineStore('map', {
                 this.routeData = response.data
             } catch (error) {
                 console.error('Error fetching route:', error)
-                alert('Failed to calculate route. Please try again.')
+                showToast('Failed to calculate route. Please try again.', 'error')
             }
         },
         clearPoints() {
