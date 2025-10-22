@@ -5,13 +5,13 @@
                 <!-- so we have to put the logo Jen made here somewhere -->
                 <div class="flex-shrink-0">
                     <router-link to="/"
-                        class="filter saturate-100 hover:saturate-200 transition flex items-center pushButton" style="transition-property: filter;transition-duration: 500ms;">
-                        <img :src=poolrLogo alt="Poolr Logo"
-                        class="mx-auto h-15 w-auto rounded-md" />
+                        class="filter saturate-100 hover:saturate-200 transition flex items-center pushButton"
+                        style="transition-property: filter;transition-duration: 500ms;">
+                        <img :src=poolrLogo alt="Poolr Logo" class="mx-auto h-15 w-auto rounded-md" />
                     </router-link>
                 </div>
 
-                <div class="hidden md:flex items-center space-x-8">
+                <div class="hidden md:flex items-center space-x-4 ml-auto mr-8">
                     <router-link to="/find-ride"
                         class="text-cool-white hover:text-electric-blue transition-colors font-medium pushButton">
                         Ride
@@ -20,10 +20,10 @@
                         class="text-cool-white hover:text-electric-blue transition-colors font-medium pushButton">
                         Drive
                     </router-link>
-                    <router-link to="/about"
+                    <!-- <router-link to="/about"
                         class="text-cool-white hover:text-electric-blue transition-colors font-medium pushButton">
                         About
-                    </router-link>
+                    </router-link> -->
                 </div>
 
                 <div v-if="username == undefined" class="hidden md:flex items-center space-x-3">
@@ -37,7 +37,6 @@
                     </router-link>
                 </div>
                 <div v-else class="hidden md:flex items-center space-x-3">
-
                     <router-link to="/me"
                         class="bg-electric-blue hover:bg-deep-blue text-white px-5 py-2 rounded-lg font-medium transition-all shadow-md hover:shadow-lg pushButton">
                         {{ username }}
@@ -74,10 +73,10 @@
                             class="text-cool-white hover:text-electric-blue transition-colors font-medium px-2 py-2 pushButton">
                             Drive
                         </router-link>
-                        <router-link to="/about" @click="closeMobileMenu"
+                        <!-- <router-link to="/about" @click="closeMobileMenu"
                             class="text-cool-white hover:text-electric-blue transition-colors font-medium px-2 py-2 pushButton">
                             About
-                        </router-link>
+                        </router-link> -->
                         <div v-if="username == undefined" class="border-t border-slate-blue pt-3 space-y-3">
                             <router-link to="/login" @click="closeMobileMenu"
                                 class="block text-cool-white hover:text-electric-blue transition-colors font-medium px-2 py-2 pushButton">
