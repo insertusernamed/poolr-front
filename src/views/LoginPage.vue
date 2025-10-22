@@ -4,7 +4,6 @@ import LoginForm from '../components/LoginForm.vue';
 </script>
 
 <template>
-    this is the login page
     <div class="login-container">
         <LoginForm />
     </div>

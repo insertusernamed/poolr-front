@@ -1,5 +1,4 @@
 <template>
-    this is the user profile page
     <div class="profile-container">
         <MyProfile />
     </div>

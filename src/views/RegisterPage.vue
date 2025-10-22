@@ -4,7 +4,6 @@ import RegistrationForm from '../components/RegistrationForm.vue';
 </script>
 
 <template>
-    this is the register page
     <div class="register-container">
         <RegistrationForm />
     </div>
