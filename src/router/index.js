@@ -10,6 +10,7 @@ import ErrorPage from '../views/ErrorPage.vue'
 import MyProfilePage from '../views/MyProfilePage.vue'
 import RideDetailsPage from '../views/RideDetailsPage.vue'
 import TransactionPage from '../views/TransactionPage.vue'
+import SettingsPage from '../views/SettingsPage.vue'
 
 const router = createRouter({
     history: createWebHistory(),
@@ -79,7 +80,13 @@ const router = createRouter({
             name: 'error',
             component: ErrorPage,
             meta: { title: '404' }
-        }
+        },
+         {
+            path: '/settings',
+            name: 'settings',
+            component: SettingsPage,
+            meta: { title: 'Settings' }
+        },
     ]
 })
 
