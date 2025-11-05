@@ -48,7 +48,7 @@ const router = createRouter({
             path: '/transaction',
             name: 'transaction',
             component: TransactionPage,
-            meta: { title: 'Transaction' }
+            meta: { title: 'Confirm Ride' }
         },
         {
             path: '/login',

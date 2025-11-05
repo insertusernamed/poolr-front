@@ -43,6 +43,8 @@ export const useMapStore = defineStore('map', {
                     ...ride,
                     pricing: calculateRidePricing(ride.rideDistanceKm)
                 }))
+                // sorting by cheapest first
+                ridesWithPricing.sort((a, b) => a.pricing.grossAmount - b.pricing.grossAmount)
                 this.nearbyRides = ridesWithPricing
                 return ridesWithPricing
             } catch (error) {
