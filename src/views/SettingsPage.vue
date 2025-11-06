@@ -4,7 +4,7 @@
 
     <div class="box" id="profile">
         <label>Profile</label>
-      <router-link to="/me" class="link-box">
+      <router-link to="/settings/profile" class="link-box">
         Go to Profile
       </router-link>
     </div>
@@ -27,6 +27,10 @@
         <option value="large">Large</option>
       </select>
     </div>
+  </div>
+
+  <div class="settingsContent">
+    <router-view />
   </div>
 </template>
 

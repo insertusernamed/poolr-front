@@ -85,7 +85,15 @@ const router = createRouter({
             path: '/settings',
             name: 'settings',
             component: SettingsPage,
-            meta: { title: 'Settings' }
+            meta: { title: 'Settings' },
+            children: [
+                {
+                    path: 'profile',
+                    name:'settingsProfile',
+                    component:MyProfilePage,
+                    meta: {title: 'My Profile'}
+                }
+            ]
         },
     ]
 })
