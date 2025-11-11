@@ -55,7 +55,7 @@
                             </svg>
                             Pickup Location
                         </h3>
-                        <p class="text-sm text-gray-900">{{ origin.fullAddress }}</p>
+                        <p class="text-sm text-gray-900">{{ getPrimaryText(origin) }}</p>
                     </div>
 
                     <div v-if="destination"
@@ -69,7 +69,7 @@
                             </svg>
                             Destination
                         </h3>
-                        <p class="text-sm text-gray-900">{{ destination.fullAddress }}</p>
+                        <p class="text-sm text-gray-900">{{ getFullAddressText(destination) }}</p>
                     </div>
                 </div>
 
@@ -88,6 +88,7 @@ import { useRouter } from 'vue-router'
 import { useAddressStore } from '../stores/addressStore'
 import { useMapStore } from '../stores/mapStore'
 import AddressSearchBar from '../components/AddressSearchBar.vue'
+import { getPrimaryText, getFullAddressText } from '../utils/addressUtils'
 import apiClient from '../utils/apiClient'
 import { showToast } from '../utils/BaseToast'
 
@@ -140,7 +141,7 @@ const getUserLocation = () => {
             try {
                 const { latitude, longitude } = position.coords
 
-                const response = await apiClient.get('/api/addresses/reverse', {
+                const response = await apiClient.get('/api/search/reverse', {
                     params: { lat: latitude, lon: longitude }
                 })
 
