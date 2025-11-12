@@ -7,11 +7,11 @@
                     <router-link to="/"
                         class="filter saturate-100 hover:saturate-200 transition flex items-center pushButton"
                         style="transition-property: filter;transition-duration: 500ms;">
-                        <img :src=poolrLogo alt="Poolr Logo" class="mx-auto h-15 w-auto rounded-md" />
+                        <img :src=poolrHeaderLogo alt="Poolr Logo" class="mx-auto h-15 w-auto rounded-md" />
                     </router-link>
                 </div>
 
-                <div class="hidden md:flex items-center space-x-4 ml-auto mr-8">
+                <div class="hidden md:flex items-center space-x-3 ml-auto">
                     <router-link to="/find-ride"
                         class="text-cool-white hover:text-electric-blue transition-colors font-medium pushButton">
                         Ride
@@ -102,6 +102,7 @@
 
 <script setup>
 import poolrLogo from '../assets/images/poolr-logo.png'
+import poolrHeaderLogo from '../assets/images/poolr-header.png'
 import { storeToRefs } from 'pinia'
 import { ref, onMounted } from 'vue'
 import { useIdentityStore } from '../stores/identityStore'
