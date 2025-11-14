@@ -42,8 +42,8 @@
                         To (Destination)
                     </label>
                     <AddressSearchBar v-model="destination" placeholder="Enter destination..." :min-chars="2"
-                        :debounce-delay="300" :max-results="10" @select="handleDestinationSelect"
-                        @clear="handleDestinationClear" />
+                        :debounce-delay="300" :max-results="10" :user-location="origin"
+                        @select="handleDestinationSelect" @clear="handleDestinationClear" />
                 </div>
 
                 <div v-if="origin || destination" class="mt-6 space-y-4">

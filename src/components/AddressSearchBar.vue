@@ -103,7 +103,7 @@
 </template>
 
 <script setup>
-import { ref, computed, watch, onMounted } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { useAddressStore } from '../stores/addressStore'
 import { getPrimaryText, getSecondaryText } from '../utils/addressUtils'
 
@@ -127,6 +127,10 @@ const props = defineProps({
     modelValue: {
         type: Object,
         default: null
+    },
+    userLocation: {
+        type: Object,
+        default: null
     }
 })
 
@@ -136,7 +140,6 @@ const searchQuery = ref('')
 const suggestions = ref([])
 const isFocused = ref(false)
 const highlightedIndex = ref(-1)
-const userLocation = ref(null)
 let debounceTimer = null
 
 const showSuggestions = computed(() => {
@@ -169,29 +172,12 @@ const fetchAddresses = async () => {
         const results = await addressStore.searchAddresses(
             searchQuery.value,
             props.maxResults,
-            userLocation.value?.lat,
-            userLocation.value?.lon
+            props.userLocation?.latitude,
+            props.userLocation?.longitude
         )
         suggestions.value = results
     } catch (err) {
         suggestions.value = []
-    }
-}
-
-const getUserLocation = () => {
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-            (position) => {
-                userLocation.value = {
-                    lat: position.coords.latitude,
-                    lon: position.coords.longitude
-                }
-            },
-            (error) => {
-                console.warn('Could not get user location:', error)
-            },
-            { timeout: 10000, enableHighAccuracy: false }
-        )
     }
 }
 
@@ -292,11 +278,6 @@ watch(() => props.modelValue, (newValue) => {
     } else {
         searchQuery.value = ''
     }
-})
-
-onMounted(() => {
-    // since we want to be able to show them how far away a destination might be
-    getUserLocation()
 })
 
 defineExpose({
