@@ -65,7 +65,7 @@ const changeLanguage = () => {
 };
 </script>
 
-<style scoped>
+<style>
 .settings-page {
   display: flex;
   flex-direction: column;
