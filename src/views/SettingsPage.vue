@@ -12,7 +12,7 @@
       <div class="box" id="rideHistory">
         <label>{{ t("rideHistory") }}</label>
         <router-link to="/settings/rideHistory" class="link-box">
-          {{ t("rideHistory") }}
+          {{ t("goToRideHistory") }}
         </router-link>
       </div>
       <div class="box" id="theme">
