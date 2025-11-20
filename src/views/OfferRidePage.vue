@@ -53,8 +53,7 @@ const isLoggedIn = computed(() => !!identityStore.id)
 
 onMounted(async () => {
     await identityStore.getIdentity()
-    const verified = localStorage.getItem('verified')
-    if (verified === 'true') {
+    if (identityStore.vehicleModel != null && identityStore.vehicleModel != "") {
         isVerified.value = true
     }
     isLoading.value = false

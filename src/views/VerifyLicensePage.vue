@@ -78,20 +78,38 @@
                 </p>
             </div>
 
+
             <!-- Verified -->
             <div v-else-if="isVerified" class="bg-white rounded-lg p-8 shadow-md text-center">
-                <h2 class="text-3xl font-semibold mb-4 text-green-600">✓ Verified Driver</h2>
-                <button @click="goToOfferRide"
-                    class="bg-blue-600 text-white px-6 py-3 rounded hover:bg-blue-700 transition-colors">
-                    Start offering rides!
-                </button>
+                <h2 class="text-3xl font-semibold mb-4 text-green-600">✓ Verification Successful</h2>
+
+                <p class="mb-6 text-gray-600">Please enter your Vehicle model to continue.</p>
+                
+                <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm bg-sky-900">
+                    <form @submit.prevent="continueToDriverPage" class="space-y-6">
+                        <div>
+                            <label for="vehicleModel" class="block text-sm/6 font-medium text-gray-100">Vehicle
+                                Model</label>
+                            <div class="mt-2">
+                                <input required v-model="localValue.vehicleModel" id="vehicleModel" type="text" name="vehicleModel"
+                                class="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"/>
+                            </div>
+                        </div>
+
+                        <div>
+                            <button type="submit"
+                                class="flex w-full justify-center rounded-md bg-indigo-500 px-3 py-1.5 text-sm/6 font-semibold text-white hover:bg-indigo-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">Continue</button>
+                        </div>
+                    </form>
+                </div>
+                
             </div>
         </transition>
     </div>
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, reactive } from 'vue'
 import { useRouter } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import { useIdentityStore } from '../stores/identityStore'
@@ -99,18 +117,11 @@ import { showToast } from '../utils/BaseToast'
 import demoLicenseImg from '../assets/images/license.jpg'
 
 const identityStore = useIdentityStore()
-
-const { id, realName, username, email, phoneNumber, vehicleModel } = storeToRefs(identityStore)
-const localUserData = ref({
-    id: "",
-    realName: "",
-    username: "",
-    email: "",
-    phoneNumber: "",
-    vehicleModel: ""
-})
 const router = useRouter()
 
+const localValue = reactive({
+    vehicleModel: ''
+})
 
 const selectedFile = ref(null)
 const isVerifying = ref(false)
@@ -123,8 +134,7 @@ const isLoggedIn = computed(() => !!identityStore.id)
 
 onMounted(async () => {
     await identityStore.getIdentity()
-    const verified = localStorage.getItem('verified')
-    if (verified === 'true') {
+    if (identityStore.vehicleModel != null && identityStore.vehicleModel != "") {
         isVerified.value = true
     }
     isLoading.value = false
@@ -134,8 +144,40 @@ const goToLogin = () => {
     router.push('/login')
 }
 
-const goToOfferRide = () => {
-    router.push('/offer-ride')
+const continueToDriverPage = async () => {
+    if (!localValue.vehicleModel) {
+        showToast('Please fill in all required fields.', 'error');
+        return
+    }
+
+    console.log(localValue.vehicleModel)
+
+    const updateData = ref({
+        id: identityStore.id,
+        realName: identityStore.realName,
+        username: identityStore.username,
+        email: identityStore.email,
+        phoneNumber: identityStore.phoneNumber,
+        vehicleModel: localValue.vehicleModel
+    })
+
+    updateData.vehicleModel = localValue.vehicleModel
+
+    console.log(updateData)
+
+    try {
+        const response = await identityStore.postIdentity(updateData.value)
+
+        if (response.status != 200) throw new Error('Failed to update user information')
+        console.log(response)
+        localStorage.setItem('token', response.data.token)
+
+        router.push('/offer-ride')
+    } catch (err) {
+        console.error(err)
+        showToast('There was a problem updating user information.', 'error');
+    }
+
 }
 
 const handleFileSelect = (event) => {
