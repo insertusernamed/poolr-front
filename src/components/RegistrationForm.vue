@@ -2,8 +2,7 @@
     <div
         class="flex min-h-full max-w-md min-w-md border border-gray-200 rounded-lg flex-col justify-center px-6 py-12 lg:px-8 bg-sky-900">
         <div class="sm:mx-auto sm:w-full sm:max-w-sm">
-             <img :src=poolrLogo alt="Poolr Logo"
-                class="mx-auto h-25 w-auto rounded-lg" />
+            <img :src=poolrLogo alt="Poolr Logo" class="mx-auto h-25 w-auto rounded-lg" />
             <h2 class="mt-10 text-center text-2xl/9 font-bold tracking-tight text-white">Sign up with Poolr</h2>
         </div>
 
@@ -65,6 +64,8 @@
                         up</button>
                 </div>
             </form>
+
+            <DemoAccountButton />
         </div>
     </div>
 </template>
@@ -76,6 +77,7 @@ import { showToast } from '../utils/BaseToast'
 import { reactive } from 'vue'
 import { useRouter } from 'vue-router'
 import { useIdentityStore } from '../stores/identityStore'
+import DemoAccountButton from './DemoAccountButton.vue'
 
 const identityStore = useIdentityStore();
 const router = useRouter()

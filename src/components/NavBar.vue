@@ -2,53 +2,57 @@
     <nav class="bg-midnight-blue border-b border-slate-blue">
         <div class="max-w-7xl mx-auto px-4">
             <div class="flex items-center justify-between h-16">
-                <!-- so we have to put the logo Jen made here somewhere -->
-                <div class="flex-shrink-0">
-                    <router-link to="/"
-                        class="filter saturate-100 hover:saturate-200 transition flex items-center pushButton"
-                        style="transition-property: filter;transition-duration: 500ms;">
-                        <img :src=poolrHeaderLogo alt="Poolr Logo" class="mx-auto h-15 w-auto rounded-md" />
-                    </router-link>
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <router-link to="/"
+                            class="filter saturate-100 hover:saturate-200 transition flex items-center pushButton"
+                            style="transition-property: filter;transition-duration: 500ms;">
+                            <img :src="poolrHeaderLogo" alt="Poolr Logo" class="h-10 w-auto rounded-md" />
+                        </router-link>
+                    </div>
+
+                    <div class="hidden md:block ml-10">
+                        <div class="flex items-baseline space-x-8">
+                            <router-link to="/find-ride"
+                                class="text-cool-white hover:text-electric-blue transition-colors font-medium text-sm pushButton">
+                                Ride
+                            </router-link>
+                            <router-link to="/offer-ride"
+                                class="text-cool-white hover:text-electric-blue transition-colors font-medium text-sm pushButton">
+                                Drive
+                            </router-link>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="hidden md:flex items-center space-x-3 ml-auto">
-                    <router-link to="/find-ride"
-                        class="text-cool-white hover:text-electric-blue transition-colors font-medium pushButton">
-                        Ride
-                    </router-link>
-                    <router-link to="/offer-ride"
-                        class="text-cool-white hover:text-electric-blue transition-colors font-medium pushButton">
-                        Drive
-                    </router-link>
-                    <!-- <router-link to="/about"
-                        class="text-cool-white hover:text-electric-blue transition-colors font-medium pushButton">
-                        About
-                    </router-link> -->
+                <div class="hidden md:block">
+                    <div class="ml-4 flex items-center md:ml-6">
+                        <div v-if="username == undefined" class="flex items-center space-x-4">
+                            <router-link to="/login"
+                                class="text-cool-white hover:text-electric-blue transition-colors font-medium px-3 py-2 rounded-md text-sm pushButton">
+                                Log in
+                            </router-link>
+                            <router-link to="/register"
+                                class="bg-electric-blue hover:bg-deep-blue text-white px-4 py-2 rounded-lg font-medium transition-all shadow-md hover:shadow-lg text-sm pushButton">
+                                Sign up
+                            </router-link>
+                        </div>
+                        <div v-else class="flex items-center space-x-4">
+                            <router-link to="/me"
+                                class="bg-electric-blue hover:bg-deep-blue text-white px-4 py-2 rounded-lg font-medium transition-all shadow-md hover:shadow-lg text-sm pushButton">
+                                {{ username }}
+                            </router-link>
+                            <button @click="logout"
+                                class="text-cool-white hover:text-electric-blue transition-colors font-medium px-3 py-2 rounded-md text-sm pushButton">
+                                Log out
+                            </button>
+                        </div>
+                    </div>
                 </div>
 
-                <div v-if="username == undefined" class="hidden md:flex items-center space-x-3">
-                    <router-link to="/login"
-                        class="text-cool-white hover:text-electric-blue transition-colors font-medium px-4 py-2 pushButton">
-                        Log in
-                    </router-link>
-                    <router-link to="/register"
-                        class="bg-electric-blue hover:bg-deep-blue text-white px-5 py-2 rounded-lg font-medium transition-all shadow-md hover:shadow-lg pushButton">
-                        Sign up
-                    </router-link>
-                </div>
-                <div v-else class="hidden md:flex items-center space-x-3">
-                    <router-link to="/me"
-                        class="bg-electric-blue hover:bg-deep-blue text-white px-5 py-2 rounded-lg font-medium transition-all shadow-md hover:shadow-lg pushButton">
-                        {{ username }}
-                    </router-link>
-                    <button @click="logout"
-                        class="text-cool-white hover:text-electric-blue transition-colors font-medium px-4 py-2 pushButton">
-                        Log out
-                    </button>
-                </div>
-
-                <div class="md:hidden">
-                    <button @click="toggleMobileMenu" class="text-cool-white hover:text-electric-blue transition p-2"
+                <div class="-mr-2 flex md:hidden">
+                    <button @click="toggleMobileMenu"
+                        class="text-cool-white hover:text-electric-blue transition p-2 rounded-md focus:outline-none"
                         aria-label="Toggle menu">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -101,7 +105,6 @@
 </template>
 
 <script setup>
-import poolrLogo from '../assets/images/poolr-logo.png'
 import poolrHeaderLogo from '../assets/images/poolr-header.png'
 import { storeToRefs } from 'pinia'
 import { ref, onMounted } from 'vue'
