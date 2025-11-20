@@ -88,30 +88,75 @@
 
         <div class="bg-slate-50 py-24">
             <div class="max-w-7xl mx-auto px-6">
-                <div class="grid md:grid-cols-3 gap-12">
-                    <div class="space-y-4">
+                <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+                    <div class="relative hidden lg:block">
                         <div
-                            class="w-12 h-12 bg-white rounded-xl border border-slate-200 flex items-center justify-center text-2xl shadow-sm">
-                            💰</div>
-                        <h3 class="text-xl font-bold text-slate-900">Smart Savings</h3>
-                        <p class="text-slate-500 leading-relaxed">Cut your commute costs by up to 50% by sharing the
-                            ride. It's simple math.</p>
+                            class="absolute -inset-4 bg-gradient-to-r from-emerald-100 to-teal-100 rounded-[2rem] blur-3xl opacity-30">
+                        </div>
+                        <div class="relative bg-white rounded-[2rem] p-8 border border-slate-100 shadow-2xl">
+                            <div class="space-y-6">
+                                <div
+                                    class="flex items-center justify-between p-4 bg-slate-50 rounded-xl border border-slate-100">
+                                    <div class="flex items-center gap-4">
+                                        <div
+                                            class="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center text-2xl">
+                                            💰</div>
+                                        <div>
+                                            <div class="font-semibold text-slate-900">Monthly Savings</div>
+                                            <div class="text-sm text-slate-500">Fuel & Maintenance</div>
+                                        </div>
+                                    </div>
+                                    <div class="text-green-600 font-bold text-lg">+$450</div>
+                                </div>
+
+                                <div
+                                    class="flex items-center justify-between p-4 bg-slate-50 rounded-xl border border-slate-100 opacity-80">
+                                    <div class="flex items-center gap-4">
+                                        <div
+                                            class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center text-2xl">
+                                            🌱</div>
+                                        <div>
+                                            <div class="font-semibold text-slate-900">CO2 Saved</div>
+                                            <div class="text-sm text-slate-500">Environmental Impact</div>
+                                        </div>
+                                    </div>
+                                    <div class="text-blue-600 font-bold text-lg">120kg</div>
+                                </div>
+
+                                <div
+                                    class="flex items-center justify-between p-4 bg-slate-50 rounded-xl border border-slate-100 opacity-60">
+                                    <div class="flex items-center gap-4">
+                                        <div
+                                            class="w-12 h-12 rounded-full bg-purple-100 flex items-center justify-center text-2xl">
+                                            🤝</div>
+                                        <div>
+                                            <div class="font-semibold text-slate-900">New Connections</div>
+                                            <div class="text-sm text-slate-500">Community Growth</div>
+                                        </div>
+                                    </div>
+                                    <div class="text-purple-600 font-bold text-lg">15+</div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="space-y-4">
-                        <div
-                            class="w-12 h-12 bg-white rounded-xl border border-slate-200 flex items-center justify-center text-2xl shadow-sm">
-                            🌱</div>
-                        <h3 class="text-xl font-bold text-slate-900">Eco Friendly</h3>
-                        <p class="text-slate-500 leading-relaxed">Every shared ride takes a car off the road. Track your
-                            carbon impact in real-time.</p>
-                    </div>
-                    <div class="space-y-4">
-                        <div
-                            class="w-12 h-12 bg-white rounded-xl border border-slate-200 flex items-center justify-center text-2xl shadow-sm">
-                            🤝</div>
-                        <h3 class="text-xl font-bold text-slate-900">Trusted Community</h3>
-                        <p class="text-slate-500 leading-relaxed">Verified profiles and community ratings ensure you
-                            always ride with confidence.</p>
+
+                    <div class="space-y-8">
+                        <h2 class="text-4xl lg:text-5xl font-bold tracking-tight leading-tight text-slate-900">
+                            Become a driver <br />
+                            <span
+                                class="text-transparent bg-clip-text bg-gradient-to-r from-electric-blue to-soft-teal">and
+                                save.</span>
+                        </h2>
+                        <p class="text-lg text-slate-500 max-w-lg leading-relaxed">
+                            Turn your empty seats into savings. Help your community, reduce traffic, and cover your
+                            commute costs by driving with Poolr.
+                        </p>
+                        <div class="pt-4">
+                            <button @click="$router.push('/offer-ride')"
+                                class="bg-slate-900 text-white hover:bg-slate-800 px-8 py-4 rounded-xl font-semibold transition-all duration-200 shadow-lg shadow-slate-200 hover:shadow-xl hover:-translate-y-0.5 w-full sm:w-auto">
+                                Start Driving Today
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
