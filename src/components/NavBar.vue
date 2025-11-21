@@ -62,40 +62,45 @@
                 </div>
             </div>
 
-            <!-- mobile menu, im not quite happy with the animation but itll have to do for now -->
-            <transition enter-active-class="transition ease-out duration-200"
-                enter-from-class="opacity-0 -translate-y-2" enter-to-class="opacity-100 translate-y-0"
-                leave-active-class="transition ease-in duration-150" leave-from-class="opacity-100 translate-y-0"
-                leave-to-class="opacity-0 -translate-y-2">
-                <div v-show="isMobileMenuOpen" class="md:hidden pb-4">
-                    <div class="flex flex-col space-y-3 pt-2">
+            <transition enter-active-class="transition ease-out duration-300"
+                enter-from-class="opacity-0 -translate-y-4 scale-95"
+                enter-to-class="opacity-100 translate-y-0 scale-100"
+                leave-active-class="transition ease-in duration-200"
+                leave-from-class="opacity-100 translate-y-0 scale-100"
+                leave-to-class="opacity-0 -translate-y-4 scale-95">
+                <div v-show="isMobileMenuOpen" class="md:hidden pb-4 overflow-hidden">
+                    <div class="flex flex-col space-y-2 pt-4">
                         <router-link to="/find-ride" @click="closeMobileMenu"
-                            class="text-cool-white hover:text-electric-blue transition-colors font-medium px-2 py-2 pushButton">
+                            class="block text-cool-white hover:text-electric-blue hover:bg-slate-blue/30 transition-all font-medium px-4 py-3 rounded-lg pushButton">
                             Ride
                         </router-link>
                         <router-link to="/offer-ride" @click="closeMobileMenu"
-                            class="text-cool-white hover:text-electric-blue transition-colors font-medium px-2 py-2 pushButton">
+                            class="block text-cool-white hover:text-electric-blue hover:bg-slate-blue/30 transition-all font-medium px-4 py-3 rounded-lg pushButton">
                             Drive
                         </router-link>
                         <!-- <router-link to="/about" @click="closeMobileMenu"
                             class="text-cool-white hover:text-electric-blue transition-colors font-medium px-2 py-2 pushButton">
                             About
                         </router-link> -->
-                        <div v-if="username == undefined" class="border-t border-slate-blue pt-3 space-y-3">
+                        <div v-if="username == undefined" class="border-t border-slate-blue mt-2 pt-4 space-y-3 px-2">
                             <router-link to="/login" @click="closeMobileMenu"
-                                class="block text-cool-white hover:text-electric-blue transition-colors font-medium px-2 py-2 pushButton">
+                                class="block text-cool-white hover:text-electric-blue hover:bg-slate-blue/30 transition-all font-medium px-4 py-3 rounded-lg text-center pushButton">
                                 Log in
                             </router-link>
                             <router-link to="/register" @click="closeMobileMenu"
-                                class="block bg-electric-blue hover:bg-deep-blue text-white px-5 py-2 rounded-lg font-medium transition-all shadow-md text-center pushButton">
+                                class="block bg-electric-blue hover:bg-deep-blue text-white px-5 py-3 rounded-lg font-medium transition-all shadow-md hover:shadow-lg text-center pushButton">
                                 Sign up
                             </router-link>
                         </div>
-                        <div v-else class="border-t border-slate-blue pt-3 space-y-3">
-                            <router-link to="/register" @click="closeMobileMenu"
-                                class="block bg-electric-blue hover:bg-deep-blue text-white px-5 py-2 rounded-lg font-medium transition-all shadow-md text-center pushButton">
-                                Sign up
+                        <div v-else class="border-t border-slate-blue mt-2 pt-4 space-y-3 px-2">
+                            <router-link to="/me" @click="closeMobileMenu"
+                                class="block bg-electric-blue hover:bg-deep-blue text-white px-5 py-3 rounded-lg font-medium transition-all shadow-md hover:shadow-lg text-center pushButton">
+                                {{ username }}
                             </router-link>
+                            <button @click="() => { logout(); closeMobileMenu(); }"
+                                class="block w-full text-cool-white hover:text-electric-blue hover:bg-slate-blue/30 transition-all font-medium px-4 py-3 rounded-lg text-center pushButton">
+                                Log out
+                            </button>
                         </div>
                     </div>
                 </div>
