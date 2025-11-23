@@ -34,11 +34,11 @@ export const useMapStore = defineStore('map', {
         },
         async fetchNearbyRides(lat, lon, lat2, lon2) {
             try {
-                const params = {lat, lon, lat2, lon2}
+                const params = { lat, lon, lat2, lon2 }
                 const response = await apiClient.get('/api/demo/rides/nearest', { params })
                 const ridesWithPricing = (response.data || []).map(ride => ({
                     ...ride,
-                    pricing: calculateRidePricing(ride.rideDistanceKm, ride.pickupDistanceKm)
+                    pricing: calculateRidePricing(ride.rideDistanceKm, ride.detourDistance)
                 }))
                 // sorting by cheapest first
                 ridesWithPricing.sort((a, b) => a.pricing.grossAmount - b.pricing.grossAmount)
@@ -56,7 +56,7 @@ export const useMapStore = defineStore('map', {
                 ? ride
                 : {
                     ...ride,
-                    pricing: calculateRidePricing(ride?.rideDistanceKm)
+                    pricing: calculateRidePricing(ride?.rideDistanceKm, ride?.detourDistance)
                 }
             this.selectedRide = rideWithPricing
             const waypoints = [

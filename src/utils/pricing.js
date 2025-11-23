@@ -11,7 +11,7 @@ const EXTERNAL_FEE_FLAT = 0.35
 
 const roundToCents = (value) => Math.round(value * 100) / 100
 
-export function calculateRidePricing(distanceKm = 0, pickupDistanceKm = 0, options = {}) {
+export function calculateRidePricing(distanceKm = 0, detourDistanceKm = 0, options = {}) {
     const baseFare = options.baseFare ?? BASE_FARE
     const perKmRate = options.perKmRate ?? PER_KM_RATE
     const perKmDetourRate = options.perKmDetourRate ?? PER_KM_DETOUR_RATE
@@ -21,9 +21,9 @@ export function calculateRidePricing(distanceKm = 0, pickupDistanceKm = 0, optio
     const externalFeeFlat = options.externalFeeFlat ?? EXTERNAL_FEE_FLAT
 
     const safeDistance = Number.isFinite(distanceKm) && distanceKm > 0 ? distanceKm : 0
-    const safePickupDistance = Number.isFinite(pickupDistanceKm) && pickupDistanceKm > 0 ? pickupDistanceKm : 0
+    const safeDetourDistance = Number.isFinite(detourDistanceKm) && detourDistanceKm > 0 ? detourDistanceKm : 0
 
-    const subtotal = roundToCents(baseFare + safeDistance * perKmRate + safePickupDistance * PER_KM_DETOUR_RATE)
+    const subtotal = roundToCents(baseFare + safeDistance * perKmRate + safeDetourDistance * PER_KM_DETOUR_RATE)
     console.log(subtotal);
     const platformFee = roundToCents(subtotal * platformFeeRate)
     const externalFee = roundToCents(externalFeeFlat)

@@ -36,7 +36,8 @@
                             {{ ride.pricing ? formatCurrency(ride.pricing.grossAmount) : '—' }}
                         </p>
                         <p class="text-xs text-gray-500">
-                            {{ ride.rideDistanceKm.toFixed(2) }} km trip • {{ ride.pickupDistanceKm.toFixed(2) }} km detour for driver • Subtotal:
+                            {{ (ride.rideDistanceKm || 0).toFixed(2) }} km trip • {{ (ride.detourDistance ||
+                            0).toFixed(2) }} km detour for driver • Subtotal:
                             {{ ride.pricing ? formatCurrency(ride.pricing.subtotalAmount) : '—' }}
                         </p>
                     </div>
