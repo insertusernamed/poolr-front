@@ -22,13 +22,13 @@
             to="/find-ride"
             class="text-cool-white hover:text-electric-blue transition-colors font-medium pushButton"
           >
-            Ride
+            {{ t("ride") }}
           </router-link>
           <router-link
             to="/offer-ride"
             class="text-cool-white hover:text-electric-blue transition-colors font-medium pushButton"
           >
-            Drive
+            {{ t("drive") }}
           </router-link>
           <!-- <router-link to="/about"
                         class="text-cool-white hover:text-electric-blue transition-colors font-medium pushButton">
@@ -38,7 +38,7 @@
             to="/settings"
             class="text-cool-white hover:text-electric-blue transition-colors font-medium pushButton"
           >
-            Settings
+            {{ t("settings") }}
           </router-link>
         </div>
 
@@ -50,13 +50,13 @@
             to="/login"
             class="text-cool-white hover:text-electric-blue transition-colors font-medium px-4 py-2 pushButton"
           >
-            Log in
+            {{ t("login") }}
           </router-link>
           <router-link
             to="/register"
             class="bg-electric-blue hover:bg-deep-blue text-white px-5 py-2 rounded-lg font-medium transition-all shadow-md hover:shadow-lg pushButton"
           >
-            Sign up
+            {{ t("signup") }}
           </router-link>
         </div>
         <div v-else class="hidden md:flex items-center space-x-3">
@@ -70,7 +70,7 @@
             @click="logout"
             class="text-cool-white hover:text-electric-blue transition-colors font-medium px-4 py-2 pushButton"
           >
-            Log out
+            {{ t("logout") }}
           </button>
         </div>
 
@@ -113,20 +113,20 @@
               @click="closeMobileMenu"
               class="text-cool-white hover:text-electric-blue transition-colors font-medium px-2 py-2 pushButton"
             >
-              Ride
+              {{ t("ride") }}
             </router-link>
             <router-link
               to="/offer-ride"
               @click="closeMobileMenu"
               class="text-cool-white hover:text-electric-blue transition-colors font-medium px-2 py-2 pushButton"
             >
-              Drive
+              {{ t("drive") }}
             </router-link>
             <router-link
               to="/settings"
               class="text-cool-white hover:text-electric-blue transition-colors font-medium px-2 py-2 pushButton"
             >
-              Settings
+              {{ t("settings") }}
             </router-link>
             <!-- <router-link to="/about" @click="closeMobileMenu"
                             class="text-cool-white hover:text-electric-blue transition-colors font-medium px-2 py-2 pushButton">
@@ -141,14 +141,14 @@
                 @click="closeMobileMenu"
                 class="block text-cool-white hover:text-electric-blue transition-colors font-medium px-2 py-2 pushButton"
               >
-                Log in
+                {{ t("login") }}
               </router-link>
               <router-link
                 to="/register"
                 @click="closeMobileMenu"
                 class="block bg-electric-blue hover:bg-deep-blue text-white px-5 py-2 rounded-lg font-medium transition-all shadow-md text-center pushButton"
               >
-                Sign up
+                {{ t("signup") }}
               </router-link>
             </div>
             <div v-else class="border-t border-slate-blue pt-3 space-y-3">
@@ -157,7 +157,7 @@
                 @click="closeMobileMenu"
                 class="block bg-electric-blue hover:bg-deep-blue text-white px-5 py-2 rounded-lg font-medium transition-all shadow-md text-center pushButton"
               >
-                Sign up
+                {{ t("signup") }}
               </router-link>
             </div>
           </div>
@@ -173,7 +173,9 @@ import { storeToRefs } from "pinia";
 import { ref, onMounted } from "vue";
 import { useIdentityStore } from "../stores/identityStore";
 import { useRouter } from "vue-router";
+import { useI18n } from "vue-i18n";
 
+const { t } = useI18n();
 const router = useRouter();
 const identityStore = useIdentityStore();
 const { username } = storeToRefs(identityStore);
