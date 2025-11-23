@@ -38,7 +38,10 @@
   "toast_searchingRides": "Recherche de trajets disponibles...",
   "toast_noRides": "Aucun trajet trouvé à proximité",
   "toast_foundRides": "Trajets trouvés",
-  "toast_error": "Une erreur s’est produite"
+  "toast_error": "Une erreur s’est produite",
+  "404_title": "Oups! Perdu dans la piscine?",
+  "404_message": "Désolé, le trajet que vous cherchez n’existe pas. Revenons sur la bonne voie!",
+  "404_backHome": "Retour à l’accueil"
 
 
 }

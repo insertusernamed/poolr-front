@@ -37,7 +37,10 @@
   "toast_searchingRides": "Searching for available rides...",
   "toast_noRides": "No rides found nearby",
   "toast_foundRides": "Rides found",
-  "toast_error": "An error occurred"
+  "toast_error": "An error occurred",
+  "404_title": "Oops! Lost in the Pool?",
+  "404_message": "Sorry, the ride you're looking for doesn't exist. Let's get you back on track!",
+  "404_backHome": "Back to Home"
 
 
 }

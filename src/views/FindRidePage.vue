@@ -259,7 +259,7 @@ const findRide = async () => {
       showToast(t("toast_noRides"), "warning");
     } else {
       showToast(
-        `${t("toast_foundRides", { count: rides.length })}${
+        `${t("toast_ridesFound", { count: rides.length })}${
           rides.length > 1 ? "s" : ""
         }`,
         "success"
