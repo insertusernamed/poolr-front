@@ -266,14 +266,25 @@
     "pricing": {
         "fareBreakdown": "Fare Breakdown",
         "baseFare": "Base Fare",
+        "fixedStartingRate": "fixed starting rate",
         "distanceCost": "Distance Cost",
         "detourCost": "Detour Cost",
         "subtotal": "Subtotal",
-        "tax": "Tax",
+        "tax": "Tax (HST)",
+        "ofSubtotal": "of subtotal",
         "platformFee": "Platform Fee",
+        "paymentProcessing": "Payment Processing",
+        "paidByDriver": "paid by driver",
         "externalFee": "External Fee",
         "tip": "Tip",
-        "totalDue": "Total Due"
+        "goesToDriver": "100% goes to driver",
+        "totalDue": "Total Due",
+        "driverEarns": "Driver earns",
+        "fromThisRide": "from this ride"
+    },
+    "rideSearch": {
+        "trip": "trip",
+        "detourForDriver": "detour for driver"
     },
     "footer": {
         "companyName": "Poolr Group",

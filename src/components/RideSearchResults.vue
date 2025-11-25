@@ -41,13 +41,11 @@
                             }}
                         </p>
                         <p class="text-xs text-gray-500">
-                            {{ (ride.rideDistanceKm || 0).toFixed(2) }} km
+                            {{ (ride.passengerTripDistanceKm || ride.rideDistanceKm || 0).toFixed(2) }} km
                             {{ t("rideSearch.trip") }} •
                             {{ (ride.detourDistance || 0).toFixed(2) }} km
                             {{ t("rideSearch.detourForDriver") }} • {{ t("rides.subtotal") }}:
-                            {{
-                                ride.pricing ? formatCurrency(ride.pricing.subtotalAmount) : "—"
-                            }}
+                            {{ ride.pricing ? formatCurrency(ride.pricing.subtotalAmount) : '—' }}
                         </p>
                     </div>
                 </div>

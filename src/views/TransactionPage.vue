@@ -44,17 +44,16 @@
 </template>
 
 <script setup>
-import { computed, onMounted } from "vue";
-import { useRouter } from "vue-router";
-import RouteMap from "../components/RouteMap.vue";
-import RideSummary from "../components/RideSummary.vue";
-import FareBreakdown from "../components/FareBreakdown.vue";
-import PayPalPayment from "../components/PayPalPayment.vue";
-import { useMapStore } from "../stores/mapStore";
-import { useAddressStore } from "../stores/addressStore";
-import { useIdentityStore } from "../stores/identityStore";
-import { calculateRidePricing } from "../utils/pricing";
-import { showToast } from "../utils/BaseToast";
+import { computed, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
+import RouteMap from '../components/RouteMap.vue'
+import RideSummary from '../components/RideSummary.vue'
+import FareBreakdown from '../components/FareBreakdown.vue'
+import PayPalPayment from '../components/PayPalPayment.vue'
+import { useMapStore } from '../stores/mapStore'
+import { useAddressStore } from '../stores/addressStore'
+import { useIdentityStore } from '../stores/identityStore'
+import { showToast } from '../utils/BaseToast'
 import { useI18n } from "vue-i18n";
 
 const { t } = useI18n();
@@ -67,13 +66,8 @@ const identityStore = useIdentityStore();
 const selectedRide = computed(() => mapStore.selectedRide);
 const routeData = computed(() => mapStore.routeData);
 const pricing = computed(() => {
-  const currentRide = selectedRide.value;
-  if (!currentRide) return null;
-  return (
-    currentRide.pricing ??
-    calculateRidePricing(currentRide.rideDistanceKm, currentRide.detourDistance)
-  );
-});
+    return selectedRide.value?.pricing || null
+})
 
 const isAuthenticated = computed(() => !!identityStore.id);
 
@@ -98,18 +92,14 @@ onMounted(async () => {
   }
 
   if (!mapStore.selectedRide?.pricing) {
-    mapStore.selectedRide = {
-      ...mapStore.selectedRide,
-      pricing: calculateRidePricing(
-        mapStore.selectedRide.rideDistanceKm,
-        mapStore.selectedRide.detourDistance
-      ),
-    };
+    // If pricing is missing, we might need to fetch the ride again or show an error
+    // For now, we assume the backend provides it.
+    // If it's a new ride flow, the previous page should have ensured pricing is present or fetched.
   }
 
   if (!addressStore.origin || !addressStore.destination) {
     showToast(
-      "Origin or destination is missing. Re-select your ride if the map looks off.",
+      t("transactions.transaction_missingOriginDestination"),
       "info"
     );
   }

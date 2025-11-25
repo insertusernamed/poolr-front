@@ -1,7 +1,6 @@
 import { defineStore } from 'pinia'
 import apiClient from '../utils/apiClient'
 import { showToast } from '../utils/BaseToast'
-import { calculateRidePricing } from '../utils/pricing'
 
 export const useMapStore = defineStore('map', {
     state: () => ({
@@ -36,14 +35,13 @@ export const useMapStore = defineStore('map', {
             try {
                 const params = { lat, lon, lat2, lon2 }
                 const response = await apiClient.get('/api/demo/rides/nearest', { params })
-                const ridesWithPricing = (response.data || []).map(ride => ({
-                    ...ride,
-                    pricing: calculateRidePricing(ride.rideDistanceKm, ride.detourDistance)
-                }))
-                // sorting by cheapest first
-                ridesWithPricing.sort((a, b) => a.pricing.grossAmount - b.pricing.grossAmount)
-                this.nearbyRides = ridesWithPricing
-                return ridesWithPricing
+                // sorting by cheapest first (handle missing pricing gracefully)
+                this.nearbyRides = (response.data || []).sort((a, b) => {
+                    const priceA = a.pricing?.grossAmount ?? Infinity
+                    const priceB = b.pricing?.grossAmount ?? Infinity
+                    return priceA - priceB
+                })
+                return this.nearbyRides
             } catch (error) {
                 console.error('Error fetching nearby rides:', error)
                 showToast('Failed to fetch nearby rides. Please try again.', 'error')
@@ -52,18 +50,12 @@ export const useMapStore = defineStore('map', {
             }
         },
         setSelectedRide(ride, userOrigin, userDestination) {
-            const rideWithPricing = ride?.pricing
-                ? ride
-                : {
-                    ...ride,
-                    pricing: calculateRidePricing(ride?.rideDistanceKm, ride?.detourDistance)
-                }
-            this.selectedRide = rideWithPricing
+            this.selectedRide = ride
             const waypoints = [
-                { lat: rideWithPricing.startLatitude, lon: rideWithPricing.startLongitude },
+                { lat: ride.startLatitude, lon: ride.startLongitude },
                 { lat: userOrigin.latitude, lon: userOrigin.longitude },
                 { lat: userDestination.latitude, lon: userDestination.longitude },
-                { lat: rideWithPricing.endLatitude, lon: rideWithPricing.endLongitude }
+                { lat: ride.endLatitude, lon: ride.endLongitude }
             ]
             this.setWaypoints(waypoints)
         },

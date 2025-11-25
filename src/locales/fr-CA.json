@@ -268,14 +268,25 @@
     "pricing": {
         "fareBreakdown": "Détail du tarif",
         "baseFare": "Tarif de base",
+        "fixedStartingRate": "tarif de départ fixe",
         "distanceCost": "Frais de distance",
         "detourCost": "Frais de détour",
         "subtotal": "Sous-total",
-        "tax": "Taxe",
+        "tax": "Taxe (TVH)",
+        "ofSubtotal": "du sous-total",
         "platformFee": "Frais de plateforme",
+        "paymentProcessing": "Traitement du paiement",
+        "paidByDriver": "payé par le chauffeur",
         "externalFee": "Frais externes",
         "tip": "Pourboire",
-        "totalDue": "Total dû"
+        "goesToDriver": "100% pour le chauffeur",
+        "totalDue": "Total dû",
+        "driverEarns": "Le chauffeur gagne",
+        "fromThisRide": "de ce trajet"
+    },
+    "rideSearch": {
+        "trip": "trajet",
+        "detourForDriver": "détour pour le chauffeur"
     },
     "footer": {
         "companyName": "Groupe Poolr",
