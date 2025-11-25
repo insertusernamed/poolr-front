@@ -17,6 +17,12 @@
                                 class="text-cool-white hover:text-electric-blue transition-colors font-medium text-sm pushButton">
                                 Ride
                             </router-link>
+
+                            <router-link to="/seeing-tickets"
+                                class="text-cool-white hover:text-electric-blue transition-colors font-medium pushButton">
+                                Tickets
+                            </router-link>
+
                             <router-link to="/offer-ride"
                                 class="text-cool-white hover:text-electric-blue transition-colors font-medium text-sm pushButton">
                                 Drive
