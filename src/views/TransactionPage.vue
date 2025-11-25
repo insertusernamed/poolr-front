@@ -2,7 +2,7 @@
   <div class="transaction-page">
     <div v-if="selectedRide" class="transaction-content">
       <section class="map-preview">
-        <h2>{{ t("transaction_routeMap") }}</h2>
+        <h2>Route Map</h2>
         <div class="map-wrapper">
           <RouteMap />
         </div>
@@ -10,9 +10,9 @@
 
       <section class="transaction-card">
         <header>
-          <h1>{{ t("transaction_confirmRide") }}</h1>
+          <h1>Confirm Your Ride</h1>
           <p class="provider-note">
-            {{ t("transaction_providerNote") }}
+            Complete your booking with PayPal or a credit card.
           </p>
         </header>
 
@@ -68,7 +68,8 @@ const pricing = computed(() => {
   const currentRide = selectedRide.value;
   if (!currentRide) return null;
   return (
-    currentRide.pricing ?? calculateRidePricing(currentRide.rideDistanceKm)
+    currentRide.pricing ??
+    calculateRidePricing(currentRide.rideDistanceKm, currentRide.detourDistance)
   );
 });
 
@@ -97,12 +98,18 @@ onMounted(async () => {
   if (!mapStore.selectedRide?.pricing) {
     mapStore.selectedRide = {
       ...mapStore.selectedRide,
-      pricing: calculateRidePricing(mapStore.selectedRide.rideDistanceKm),
+      pricing: calculateRidePricing(
+        mapStore.selectedRide.rideDistanceKm,
+        mapStore.selectedRide.detourDistance
+      ),
     };
   }
 
   if (!addressStore.origin || !addressStore.destination) {
-    showToast(showToast(t("transaction_missingOriginDestination"), "info"));
+    showToast(
+      "Origin or destination is missing. Re-select your ride if the map looks off.",
+      "info"
+    );
   }
 });
 </script>
