@@ -1,60 +1,62 @@
 <template>
-  <div class="transaction-page">
-    <div v-if="selectedRide" class="transaction-content">
-      <section class="map-preview">
-        <h2>{{ t("transactions.transaction_routeMap") }}</h2>
-        <div class="map-wrapper">
-          <RouteMap />
+    <div class="transaction-page">
+        <div v-if="selectedRide" class="transaction-content">
+            <section class="map-preview">
+                <div class="map-header">
+                    <button @click="goBack" class="back-link-map">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                        </svg>
+                        {{ t("transactions.back") }}
+                    </button>
+                    <h2>{{ t("transactions.transaction_routeMap") }}</h2>
+                </div>
+                <div class="map-wrapper">
+                    <RouteMap :interactive="false" />
+                </div>
+            </section>
+
+            <section class="transaction-card">
+                <header>
+                    <h1>{{ t("transactions.transaction_confirmRide") }}</h1>
+                    <p class="provider-note">
+                        {{ t("transactions.transaction_providerNote") }}
+                    </p>
+                </header>
+
+                <RideSummary :ride="selectedRide" :route-data="routeData" />
+                <FareBreakdown v-if="pricing" :pricing="pricing" />
+                <PayPalPayment :is-authenticated="isAuthenticated" :pricing="pricing"
+                    :ride-name="selectedRide.driverName" @login="goToLogin" />
+
+                <div class="actions">
+                    <button class="back-btn" @click="goBack">{{ t("transactions.back") }}</button>
+                </div>
+            </section>
         </div>
-      </section>
 
-      <section class="transaction-card">
-        <header>
-          <h1>{{ t("transactions.transaction_confirmRide") }}</h1>
-          <p class="provider-note">
-            {{ t("transactions.transaction_providerNote") }}
-          </p>
-        </header>
-
-        <RideSummary :ride="selectedRide" :route-data="routeData" />
-        <FareBreakdown v-if="pricing" :pricing="pricing" />
-        <PayPalPayment
-          :is-authenticated="isAuthenticated"
-          :pricing="pricing"
-          :ride-name="selectedRide.driverName"
-          @login="goToLogin"
-        />
-
-        <div class="actions">
-          <button class="back-btn" @click="goBack">
-            {{ t("transactions.back") }}
-          </button>
+        <div v-else class="missing-selection">
+            <h1>{{ t("transactions.transaction_noRideSelected") }}</h1>
+            <p>{{ t("transactions.transaction_pickRideFirst") }}.</p>
+            <button class="back-btn" @click="goToResults">
+                {{ t("transactions.transaction_backToResults") }}
+            </button>
         </div>
-      </section>
     </div>
-
-    <div v-else class="missing-selection">
-      <h1>{{ t("transactions.transaction_noRideSelected") }}</h1>
-      <p>{{ t("transactions.transaction_pickRideFirst") }}.</p>
-      <button class="back-btn" @click="goToResults">
-        {{ t("transactions.transaction_backToResults") }}
-      </button>
-    </div>
-  </div>
 </template>
 
 <script setup>
-import { computed, onMounted } from "vue";
-import { useRouter } from "vue-router";
-import RouteMap from "../components/RouteMap.vue";
-import RideSummary from "../components/RideSummary.vue";
-import FareBreakdown from "../components/FareBreakdown.vue";
-import PayPalPayment from "../components/PayPalPayment.vue";
-import { useMapStore } from "../stores/mapStore";
-import { useAddressStore } from "../stores/addressStore";
-import { useIdentityStore } from "../stores/identityStore";
-import { calculateRidePricing } from "../utils/pricing";
-import { showToast } from "../utils/BaseToast";
+import { computed, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
+import RouteMap from '../components/RouteMap.vue'
+import RideSummary from '../components/RideSummary.vue'
+import FareBreakdown from '../components/FareBreakdown.vue'
+import PayPalPayment from '../components/PayPalPayment.vue'
+import { useMapStore } from '../stores/mapStore'
+import { useAddressStore } from '../stores/addressStore'
+import { useIdentityStore } from '../stores/identityStore'
+import { showToast } from '../utils/BaseToast'
 import { useI18n } from "vue-i18n";
 
 const { t } = useI18n();
@@ -67,13 +69,8 @@ const identityStore = useIdentityStore();
 const selectedRide = computed(() => mapStore.selectedRide);
 const routeData = computed(() => mapStore.routeData);
 const pricing = computed(() => {
-  const currentRide = selectedRide.value;
-  if (!currentRide) return null;
-  return (
-    currentRide.pricing ??
-    calculateRidePricing(currentRide.rideDistanceKm, currentRide.detourDistance)
-  );
-});
+    return selectedRide.value?.pricing || null
+})
 
 const isAuthenticated = computed(() => !!identityStore.id);
 
@@ -90,30 +87,23 @@ const goToLogin = () => {
 };
 
 onMounted(async () => {
-  await identityStore.getIdentity();
+    await identityStore.getIdentity()
 
-  if (!selectedRide.value) {
-    router.replace("/find-ride");
-    return;
-  }
+    if (!selectedRide.value) {
+        router.replace('/find-ride')
+        return
+    }
 
-  if (!mapStore.selectedRide?.pricing) {
-    mapStore.selectedRide = {
-      ...mapStore.selectedRide,
-      pricing: calculateRidePricing(
-        mapStore.selectedRide.rideDistanceKm,
-        mapStore.selectedRide.detourDistance
-      ),
-    };
-  }
+    if (!mapStore.selectedRide?.pricing) {
+        // If pricing is missing, we might need to fetch the ride again or show an error
+        // For now, we assume the backend provides it.
+        // If it's a new ride flow, the previous page should have ensured pricing is present or fetched.
+    }
 
-  if (!addressStore.origin || !addressStore.destination) {
-    showToast(
-      "Origin or destination is missing. Re-select your ride if the map looks off.",
-      "info"
-    );
-  }
-});
+    if (!addressStore.origin || !addressStore.destination) {
+        showToast(t("transactions.transaction_missingOriginDestination"), 'info')
+    }
+})
 </script>
 
 <style scoped>
@@ -155,6 +145,30 @@ onMounted(async () => {
   font-size: 14px;
 }
 
+.back-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: none;
+    border: none;
+    padding: 0;
+    margin-bottom: 16px;
+    color: #4b5563;
+    font-weight: 500;
+    cursor: pointer;
+    font-size: 14px;
+    transition: color 0.2s;
+}
+
+.back-link:hover {
+    color: #111827;
+}
+
+.back-link svg {
+    width: 20px;
+    height: 20px;
+}
+
 .actions {
   margin-top: 24px;
   display: flex;
@@ -182,10 +196,41 @@ onMounted(async () => {
 }
 
 .map-preview h2 {
-  margin: 0 0 16px 0;
-  font-size: 20px;
-  font-weight: 600;
-  color: #111827;
+    margin: 0;
+    font-size: 20px;
+    font-weight: 600;
+    color: #111827;
+}
+
+.map-header {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.back-link-map {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: none;
+    border: none;
+    padding: 0;
+    color: #4b5563;
+    font-weight: 500;
+    cursor: pointer;
+    font-size: 14px;
+    transition: color 0.2s;
+}
+
+.back-link-map:hover {
+    color: #111827;
+}
+
+.back-link-map svg {
+    width: 20px;
+    height: 20px;
 }
 
 .map-wrapper {

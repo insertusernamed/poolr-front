@@ -165,13 +165,27 @@
         "waypoint": "Point"
     },
     "transactions": {
-        "transaction_routeMap": "Carte de l’itinéraire",
+        "transaction_routeMap": "Carte de l'itinéraire",
         "transaction_confirmRide": "Confirmez votre trajet",
         "transaction_providerNote": "Complétez votre réservation avec PayPal ou une carte de crédit.",
         "transaction_noRideSelected": "Aucun trajet sélectionné",
-        "transaction_pickRideFirst": "Veuillez sélectionner un trajet d’abord",
+        "transaction_pickRideFirst": "Veuillez sélectionner un trajet d'abord",
         "transaction_backToResults": "Retour aux résultats",
         "back": "Retour"
+    },
+    "infoPanel": {
+        "driversOrigin": "Point de départ du conducteur",
+        "pickupRoute": "Trajet de ramassage",
+        "driverToYou": "Conducteur vers vous",
+        "meetHere": "Point de rencontre",
+        "sharedRide": "Trajet partagé",
+        "youAndDriver": "Vous et le conducteur",
+        "destination": "Destination",
+        "driversFinalStop": "Arrêt final du conducteur",
+        "kmTotal": "Distance totale",
+        "min": "Minutes",
+        "clearRoute": "Effacer l'itinéraire",
+        "away": "de distance"
     },
     "tickets": {
         "title": "Vos billets",
@@ -268,14 +282,25 @@
     "pricing": {
         "fareBreakdown": "Détail du tarif",
         "baseFare": "Tarif de base",
+        "fixedStartingRate": "tarif de départ fixe",
         "distanceCost": "Frais de distance",
         "detourCost": "Frais de détour",
         "subtotal": "Sous-total",
-        "tax": "Taxe",
+        "tax": "Taxe (TVH)",
+        "ofSubtotal": "du sous-total",
         "platformFee": "Frais de plateforme",
+        "paymentProcessing": "Traitement du paiement",
+        "paidByDriver": "payé par le chauffeur",
         "externalFee": "Frais externes",
         "tip": "Pourboire",
-        "totalDue": "Total dû"
+        "goesToDriver": "100% pour le chauffeur",
+        "totalDue": "Total dû",
+        "driverEarns": "Le chauffeur gagne",
+        "fromThisRide": "de ce trajet"
+    },
+    "rideSearch": {
+        "trip": "trajet",
+        "detourForDriver": "détour pour le chauffeur"
     },
     "footer": {
         "companyName": "Groupe Poolr",
