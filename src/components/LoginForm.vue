@@ -11,14 +11,14 @@
       <h2
         class="mt-10 text-center text-2xl/9 font-bold tracking-tight text-slate-900"
       >
-        Login
+        {{ t("loginTitle") }}
       </h2>
     </div>
 
     <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
       <form @submit.prevent="submitForm" class="space-y-6">
         <div>
-          <label for="email" class="form-label">Email address</label>
+          <label for="email" class="form-label">{{ t("emailAddress") }}</label>
           <div class="mt-2">
             <input
               v-model="login.email"
@@ -33,7 +33,7 @@
         </div>
 
         <div>
-          <label for="password" class="form-label">Password</label>
+          <label for="password" class="form-label">{{ t("password") }}</label>
           <div class="mt-2">
             <input
               v-model="login.password"
@@ -48,7 +48,9 @@
         </div>
 
         <div>
-          <button type="submit" class="btn-primary">Login</button>
+          <button type="submit" class="btn-primary">
+            {{ t("loginButton") }}
+          </button>
         </div>
       </form>
 
@@ -65,6 +67,9 @@ import { reactive } from "vue";
 import { useRouter } from "vue-router";
 import { useIdentityStore } from "../stores/identityStore";
 import DemoAccountButton from "./DemoAccountButton.vue";
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 
 const identityStore = useIdentityStore();
 const router = useRouter();

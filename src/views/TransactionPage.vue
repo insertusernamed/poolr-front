@@ -2,7 +2,7 @@
   <div class="transaction-page">
     <div v-if="selectedRide" class="transaction-content">
       <section class="map-preview">
-        <h2>Route Map</h2>
+        <h2>{{ t("transactions.transaction_routeMap") }}</h2>
         <div class="map-wrapper">
           <RouteMap />
         </div>
@@ -10,9 +10,9 @@
 
       <section class="transaction-card">
         <header>
-          <h1>Confirm Your Ride</h1>
+          <h1>{{ t("transactions.transaction_confirmRide") }}</h1>
           <p class="provider-note">
-            Complete your booking with PayPal or a credit card.
+            {{ t("transactions.transaction_providerNote") }}
           </p>
         </header>
 
@@ -26,16 +26,18 @@
         />
 
         <div class="actions">
-          <button class="back-btn" @click="goBack">{{ t("back") }}</button>
+          <button class="back-btn" @click="goBack">
+            {{ t("transactions.back") }}
+          </button>
         </div>
       </section>
     </div>
 
     <div v-else class="missing-selection">
-      <h1>{{ t("transaction_noRideSelected") }}</h1>
-      <p>{{ t("transaction_pickRideFirst") }}.</p>
+      <h1>{{ t("transactions.transaction_noRideSelected") }}</h1>
+      <p>{{ t("transactions.transaction_pickRideFirst") }}.</p>
       <button class="back-btn" @click="goToResults">
-        {{ t("transaction_backToResults") }}
+        {{ t("transactions.transaction_backToResults") }}
       </button>
     </div>
   </div>

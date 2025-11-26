@@ -186,6 +186,7 @@ import { storeToRefs } from "pinia";
 import { ref, onMounted } from "vue";
 import { useIdentityStore } from "../stores/identityStore";
 import { useRouter } from "vue-router";
+import { useI18n } from "vue-i18n";
 
 const { t } = useI18n();
 const router = useRouter();

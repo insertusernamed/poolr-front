@@ -1,8 +1,10 @@
 <template>
   <div class="ride-search-results">
-    <h2 class="text-xl font-bold text-gray-900 mb-4">Available Rides</h2>
+    <h2 class="text-xl font-bold text-gray-900 mb-4">
+      {{ t("rides.availableRides") }}
+    </h2>
     <div v-if="futureRides.length === 0" class="text-center py-8 text-gray-500">
-      No rides found. Try adjusting your search criteria.
+      {{ t("rides.noRidesFound") }}
     </div>
     <div v-else class="space-y-4">
       <div
@@ -43,9 +45,10 @@
               }}
             </p>
             <p class="text-xs text-gray-500">
-              {{ (ride.rideDistanceKm || 0).toFixed(2) }} km trip •
-              {{ (ride.detourDistance || 0).toFixed(2) }} km detour for driver •
-              Subtotal:
+              {{ (ride.rideDistanceKm || 0).toFixed(2) }} km
+              {{ t("rideSearch.trip") }} •
+              {{ (ride.detourDistance || 0).toFixed(2) }} km
+              {{ t("rideSearch.detourForDriver") }} • {{ t("rides.subtotal") }}:
               {{
                 ride.pricing ? formatCurrency(ride.pricing.subtotalAmount) : "—"
               }}
@@ -57,7 +60,7 @@
             class="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1"
             @click.stop="$emit('select', ride)"
           >
-            Use This Ride
+            {{ t("rides.useThisRide") }}
           </button>
         </div>
       </div>

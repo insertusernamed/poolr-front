@@ -11,14 +11,14 @@
       <h2
         class="mt-10 text-center text-2xl/9 font-bold tracking-tight text-slate-900"
       >
-        Sign up with Poolr
+        {{ t("signUpWithPoolr") }}
       </h2>
     </div>
 
     <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
       <form @submit.prevent="submitForm" class="space-y-6">
         <div>
-          <label for="realName" class="form-label">Full Name</label>
+          <label for="realName" class="form-label">{{ t("fullName") }}</label>
           <div class="mt-2">
             <input
               v-model="register.realName"
@@ -33,7 +33,7 @@
         </div>
 
         <div>
-          <label for="username" class="form-label">Username</label>
+          <label for="username" class="form-label">{{ t("username") }}</label>
           <div class="mt-2">
             <input
               v-model="register.username"
@@ -48,7 +48,9 @@
         </div>
 
         <div>
-          <label for="phoneNumber" class="form-label">Phone number</label>
+          <label for="phoneNumber" class="form-label">{{
+            t("phoneNumber")
+          }}</label>
           <div class="mt-2">
             <input
               v-model="register.phoneNumber"
@@ -63,7 +65,7 @@
         </div>
 
         <div>
-          <label for="email" class="form-label">Email address</label>
+          <label for="email" class="form-label">{{ t("emailAddress") }}</label>
           <div class="mt-2">
             <input
               v-model="register.email"
@@ -79,12 +81,12 @@
 
         <div>
           <div class="flex items-center justify-between">
-            <label for="password" class="form-label">Password</label>
+            <label for="password" class="form-label">{{ t("password") }}</label>
             <div class="text-sm">
               <a
                 href="#"
                 class="font-semibold text-electric-blue hover:text-blue-600"
-                >Forgot password?</a
+                >{{ t("forgotPassword") }}</a
               >
             </div>
           </div>
@@ -102,7 +104,7 @@
         </div>
 
         <div>
-          <button type="submit" class="btn-primary">Sign up</button>
+          <button type="submit" class="btn-primary">{{ t("signUp") }}</button>
         </div>
       </form>
 
@@ -119,6 +121,7 @@ import { reactive } from "vue";
 import { useRouter } from "vue-router";
 import { useIdentityStore } from "../stores/identityStore";
 import DemoAccountButton from "./DemoAccountButton.vue";
+const { t } = useI18n();
 
 const identityStore = useIdentityStore();
 const router = useRouter();

@@ -1,13 +1,13 @@
 <template>
   <div class="pricing-section">
-    <h2>Fare Breakdown</h2>
+    <h2>{{ t("pricing.fareBreakdown") }}</h2>
     <ul>
       <li v-if="pricing.baseFareAmount !== undefined">
-        <span>Base Fare</span>
+        <span>{{ t("pricing.baseFare") }}</span>
         <span>{{ formatCurrency(pricing.baseFareAmount) }}</span>
       </li>
       <li v-if="pricing.distanceCostAmount !== undefined">
-        <span>Distance Cost</span>
+        <span>{{ t("pricing.distanceCost") }}</span>
         <span>{{ formatCurrency(pricing.distanceCostAmount) }}</span>
       </li>
       <li
@@ -15,32 +15,32 @@
           pricing.detourCostAmount !== undefined && pricing.detourCostAmount > 0
         "
       >
-        <span>Detour Cost</span>
+        <span>{{ t("pricing.detourCost") }}</span>
         <span>{{ formatCurrency(pricing.detourCostAmount) }}</span>
       </li>
       <li class="subtotal-row">
-        <span>Subtotal</span>
+        <span>{{ t("pricing.subtotal") }}</span>
         <span>{{ formatCurrency(pricing.subtotalAmount) }}</span>
       </li>
       <li>
-        <span>Tax</span>
+        <span>{{ t("pricing.tax") }}</span>
         <span>{{ formatCurrency(pricing.taxAmount) }}</span>
       </li>
       <li>
-        <span>Platform Fee</span>
+        <span>{{ t("pricing.platformFee") }}</span>
         <span>{{ formatCurrency(pricing.platformFeeAmount) }}</span>
       </li>
       <li>
-        <span>External Fee</span>
+        <span>{{ t("pricing.externalFee") }}</span>
         <span>{{ formatCurrency(pricing.externalFeeAmount) }}</span>
       </li>
       <li>
-        <span>Tip</span>
+        <span>{{ t("pricing.tip") }}</span>
         <span>{{ formatCurrency(pricing.tipAmount) }}</span>
       </li>
     </ul>
     <div class="pricing-total">
-      <span>Total Due</span>
+      <span>{{ t("pricing.totalDue") }}</span>
       <span>{{ formatCurrency(pricing.grossAmount) }}</span>
     </div>
   </div>

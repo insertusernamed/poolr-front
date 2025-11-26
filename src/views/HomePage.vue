@@ -7,18 +7,17 @@
       <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
         <div class="space-y-8">
           <h1
-            class="text-5xl lg:text-7xl font-bold tracking-tight leading-tight text-slate-900"
+            class="text-A5xl lg:text-7xl font-bold tracking-tight leading-tight text-slate-900"
           >
-            The modern way <br />
+            {{ t("heroTitle") }} <br />
             <span
               class="text-transparent bg-clip-text bg-gradient-to-r from-electric-blue to-soft-teal"
-              >to carpool.</span
+              >{{ t("heroTitle2") }}</span
             >
           </h1>
 
           <p class="text-lg lg:text-xl text-slate-500 max-w-lg leading-relaxed">
-            Poolr connects you with neighbors for seamless ridesharing. Save
-            costs, reduce traffic, and meet great people.
+            {{ t("heroDescription") }}
           </p>
 
           <div class="flex flex-col sm:flex-row gap-4 pt-4">
@@ -26,13 +25,13 @@
               @click="$router.push('/find-ride')"
               class="bg-slate-900 text-white hover:bg-slate-800 px-8 py-4 rounded-xl font-semibold transition-all duration-200 shadow-lg shadow-slate-200 hover:shadow-xl hover:-translate-y-0.5 w-full sm:w-auto"
             >
-              Find a Ride
+              {{ t("findRide") }}
             </button>
             <button
               @click="$router.push('/offer-ride')"
               class="bg-white text-slate-900 border border-slate-200 hover:border-slate-300 hover:bg-slate-50 px-8 py-4 rounded-xl font-semibold transition-all duration-200 w-full sm:w-auto"
             >
-              Offer a Ride
+              {{ t("offerRide") }}
             </button>
           </div>
 
@@ -44,9 +43,9 @@
               >
                 {{ displayCount.toLocaleString() }}
               </span>
-              <span class="text-slate-500 font-medium"
-                >active rides happening right now</span
-              >
+              <span class="text-slate-500 font-medium">{{
+                t("activeRides")
+              }}</span>
             </div>
           </div>
         </div>
@@ -138,10 +137,10 @@
                     </div>
                     <div>
                       <div class="font-semibold text-slate-900">
-                        Monthly Savings
+                        {{ t("monthlySavings") }}
                       </div>
                       <div class="text-sm text-slate-500">
-                        Fuel & Maintenance
+                        {{ t("fuelMaintenance") }}
                       </div>
                     </div>
                   </div>
@@ -158,9 +157,11 @@
                       🌱
                     </div>
                     <div>
-                      <div class="font-semibold text-slate-900">CO2 Saved</div>
+                      <div class="font-semibold text-slate-900">
+                        {{ t("co2Saved") }}
+                      </div>
                       <div class="text-sm text-slate-500">
-                        Environmental Impact
+                        {{ t("enviromentalImpact") }}
                       </div>
                     </div>
                   </div>
@@ -178,9 +179,11 @@
                     </div>
                     <div>
                       <div class="font-semibold text-slate-900">
-                        New Connections
+                        {{ t("newConnections") }}
                       </div>
-                      <div class="text-sm text-slate-500">Community Growth</div>
+                      <div class="text-sm text-slate-500">
+                        {{ t("communityGrowth") }}
+                      </div>
                     </div>
                   </div>
                   <div class="text-purple-600 font-bold text-lg">15+</div>
@@ -193,22 +196,21 @@
             <h2
               class="text-4xl lg:text-5xl font-bold tracking-tight leading-tight text-slate-900"
             >
-              Become a driver <br />
+              {{ t("becomeDriver") }} <br />
               <span
                 class="text-transparent bg-clip-text bg-gradient-to-r from-electric-blue to-soft-teal"
-                >and save.</span
+                >{{ t("andSave") }}</span
               >
             </h2>
             <p class="text-lg text-slate-500 max-w-lg leading-relaxed">
-              Turn your empty seats into savings. Help your community, reduce
-              traffic, and cover your commute costs by driving with Poolr.
+              {{ t("driverDescription") }}
             </p>
             <div class="pt-4">
               <button
                 @click="$router.push('/offer-ride')"
                 class="bg-slate-900 text-white hover:bg-slate-800 px-8 py-4 rounded-xl font-semibold transition-all duration-200 shadow-lg shadow-slate-200 hover:shadow-xl hover:-translate-y-0.5 w-full sm:w-auto"
               >
-                Start Driving Today
+                {{ t("startDriving") }}
               </button>
             </div>
           </div>
@@ -221,6 +223,9 @@
 <script setup>
 import { ref, onMounted, onUnmounted, watch } from "vue";
 import apiClient from "../utils/apiClient";
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 
 const rideCount = ref(0);
 const displayCount = ref(0);

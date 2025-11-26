@@ -6,13 +6,15 @@
       <h2
         class="mt-10 text-center text-2xl/9 font-bold tracking-tight text-slate-900"
       >
-        My Profile
+        {{ t("prof.title") }}
       </h2>
     </div>
     <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
       <form @submit.prevent="submitForm" class="space-y-6">
         <div>
-          <label for="realName" class="form-label">Full Name</label>
+          <label for="realName" class="form-label">{{
+            t("prof.fullName")
+          }}</label>
           <div class="mt-2">
             <input
               v-model="localUserData.realName"
@@ -25,7 +27,9 @@
         </div>
 
         <div>
-          <label for="username" class="form-label">Username</label>
+          <label for="username" class="form-label">{{
+            t("prof.username")
+          }}</label>
           <div class="mt-2">
             <input
               v-model="localUserData.username"
@@ -38,7 +42,9 @@
         </div>
 
         <div>
-          <label for="phoneNumber" class="form-label">Phone number</label>
+          <label for="phoneNumber" class="form-label">{{
+            t("prof.phoneNumber")
+          }}</label>
           <div class="mt-2">
             <input
               v-model="localUserData.phoneNumber"
@@ -52,7 +58,9 @@
         </div>
 
         <div>
-          <label for="email" class="form-label">Email address</label>
+          <label for="email" class="form-label">{{
+            t("prof.emailAddress")
+          }}</label>
           <div class="mt-2">
             <input
               v-model="localUserData.email"
@@ -68,14 +76,16 @@
         <!-- Vehicle Info Section -->
         <div class="border-t border-gray-200 pt-6 mt-6">
           <h3 class="text-lg font-medium text-gray-900 mb-4">
-            Vehicle Information
+            {{ t("prof.vehicleInfo") }}
           </h3>
 
           <!-- show vehicle fields only if verified and vehicle is set up -->
           <template v-if="canEditVehicle">
             <div class="space-y-4">
               <div>
-                <label for="vehicleMake" class="form-label">Vehicle Make</label>
+                <label for="vehicleMake" class="form-label">{{
+                  t("prof.vehicleMake")
+                }}</label>
                 <div class="mt-2">
                   <input
                     v-model="localUserData.vehicleMake"
@@ -88,9 +98,9 @@
               </div>
 
               <div>
-                <label for="vehicleModel" class="form-label"
-                  >Vehicle Model</label
-                >
+                <label for="vehicleModel" class="form-label">{{
+                  t("prof.vehicleModel")
+                }}</label>
                 <div class="mt-2">
                   <input
                     v-model="localUserData.vehicleModel"
@@ -103,7 +113,9 @@
               </div>
 
               <div>
-                <label for="vehicleYear" class="form-label">Vehicle Year</label>
+                <label for="vehicleYear" class="form-label">{{
+                  t("prof.vehicleYear")
+                }}</label>
                 <div class="mt-2">
                   <input
                     v-model="localUserData.vehicleYear"
@@ -116,9 +128,9 @@
               </div>
 
               <div>
-                <label for="vehicleSeats" class="form-label"
-                  >Vehicle Seats</label
-                >
+                <label for="vehicleSeats" class="form-label">{{
+                  t("prof.vehicleSeats")
+                }}</label>
                 <div class="mt-2">
                   <input
                     v-model="localUserData.vehicleSeats"
@@ -131,9 +143,9 @@
               </div>
 
               <div>
-                <label for="vehicleColor" class="form-label"
-                  >Vehicle Color</label
-                >
+                <label for="vehicleColor" class="form-label">{{
+                  t("prof.vehicleColor")
+                }}</label>
                 <div class="mt-2">
                   <input
                     v-model="localUserData.vehicleColor"
@@ -151,11 +163,10 @@
           <template v-else>
             <div class="bg-gray-50 rounded-lg p-4 text-center">
               <p class="text-gray-600 mb-4" v-if="!isVerified">
-                To add vehicle information, you need to verify your driver's
-                license first.
+                {{ t("prof.verifyLicenseMessage") }}
               </p>
               <p class="text-gray-600 mb-4" v-else>
-                Complete your vehicle setup to start offering rides.
+                {{ t("prof.completeVehicleSetupMessage") }}
               </p>
               <button
                 type="button"
@@ -164,8 +175,8 @@
               >
                 {{
                   isVerified
-                    ? "Setup Vehicle"
-                    : "Verify License & Setup Vehicle"
+                    ? t("prof.setupVehicle")
+                    : t("prof.verifyLicenseAndSetupVehicle")
                 }}
               </button>
             </div>
@@ -173,7 +184,9 @@
         </div>
 
         <div>
-          <button type="submit" class="btn-primary">Update</button>
+          <button type="submit" class="btn-primary">
+            {{ t("prof.updateButton") }}
+          </button>
         </div>
       </form>
     </div>

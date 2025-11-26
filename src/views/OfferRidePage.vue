@@ -4,7 +4,7 @@
       <div
         class="w-12 h-12 mx-auto mb-4 border-4 border-gray-200 border-t-blue-600 rounded-full animate-spin"
       ></div>
-      <p class="text-gray-600">{{ t("loading") }}</p>
+      <p class="text-gray-600">{{ t("offer.loading") }}</p>
     </div>
     <transition v-else name="fade" mode="out-in">
       <div
@@ -12,16 +12,16 @@
         class="bg-white rounded-lg p-8 shadow-md text-center"
       >
         <h2 class="text-2xl font-semibold mb-4 text-gray-800">
-          {{ t("offer_startHeader") }}
+          {{ t("offer.startHeader") }}
         </h2>
         <p class="mb-6 text-gray-600">
-          {{ t("offer_startMessage") }}
+          {{ t("offer.startMessage") }}
         </p>
         <button
           @click="goToLogin"
           class="bg-blue-600 text-white px-6 py-3 rounded hover:bg-blue-700 transition-colors"
         >
-          {{ t("offer_loginButton") }}
+          {{ t("offer.loginButton") }}
         </button>
       </div>
 
@@ -32,22 +32,19 @@
       >
         <!-- Maybe this should just redirect but this seems okay for now -->
         <h2 class="text-2xl font-semibold mb-4 text-gray-800">
-          Start Offering Rides
+          {{ t("offer.notVerifiedHeader") }}
         </h2>
         <p class="mb-6 text-gray-600">
-          Looking to help others in their commute?
+          {{ t("offer.notVerifiedMessage") }}
         </p>
         <p class="mb-6 text-gray-600">
-          To register as a driver with our service, you will need to provide a
-          valid driver's license for the area you will be driving in. Any images
-          you upload will be removed from our servers after verification is
-          complete.
+          {{ t("offer.notVerifiedInstructions") }}
         </p>
         <button
           @click="goToVerify"
           class="bg-blue-600 text-white px-6 py-3 rounded hover:bg-blue-700 transition-colors"
         >
-          Submit your License
+          {{ t("offer.submitLicenseButton") }}
         </button>
       </div>
 
@@ -57,17 +54,16 @@
         class="bg-white rounded-lg p-8 shadow-md text-center"
       >
         <h2 class="text-2xl font-semibold mb-4 text-gray-800">
-          Complete Vehicle Setup
+          {{ t("offer.completeVehicleHeader") }}
         </h2>
         <p class="mb-6 text-gray-600">
-          You are verified, but you need to set up your vehicle details before
-          offering rides.
+          {{ t("offer.completeVehicleMessage") }}
         </p>
         <button
           @click="goToVerify"
           class="bg-blue-600 text-white px-6 py-3 rounded hover:bg-blue-700 transition-colors"
         >
-          Setup Vehicle
+          {{ t("offer.setupVehicleButton") }}
         </button>
       </div>
 
@@ -77,18 +73,18 @@
         class="bg-white rounded-lg p-8 shadow-md"
       >
         <h2 class="text-3xl font-semibold mb-6 text-gray-800 text-center">
-          Offer a Ride
+          {{ t("offer.offerRideHeader") }}
         </h2>
 
         <div class="mb-8 bg-gray-50 p-6 rounded-lg border border-gray-200">
           <h3 class="text-xl font-medium mb-4 text-gray-700">
-            Create New Ride
+            {{ t("offer.createRideHeader") }}
           </h3>
           <div class="space-y-4" :key="refreshKey">
             <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1"
-                >Starting Location</label
-              >
+              <label class="block text-sm font-medium text-gray-700 mb-1">{{
+                t("offer.startingLocationLabel")
+              }}</label>
               <AddressSearchBar
                 placeholder="Where are you driving from?"
                 @select="handleStartSelect"
@@ -96,9 +92,9 @@
             </div>
 
             <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1"
-                >Destination</label
-              >
+              <label class="block text-sm font-medium text-gray-700 mb-1">{{
+                t("offer.destinationLabel")
+              }}</label>
               <AddressSearchBar
                 placeholder="Where are you heading?"
                 @select="handleEndSelect"
@@ -108,9 +104,9 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1"
-                  >Departure Time</label
-                >
+                <label class="block text-sm font-medium text-gray-700 mb-1">{{
+                  t("offer.departureTimeLabel")
+                }}</label>
                 <input
                   v-model="departureTime"
                   type="datetime-local"
@@ -118,8 +114,8 @@
                 />
               </div>
               <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1"
-                  >Fare ($)</label
+                <label class="block text-sm font-medium text-gray-700 mb-1">
+                  {{ t("offer.fareLabel") }}</label
                 >
                 <input
                   v-model="fare"
@@ -153,14 +149,18 @@
                   ></path>
                 </svg>
               </span>
-              {{ isCreating ? "Creating Ride..." : "Create Ride" }}
+              {{
+                isCreating
+                  ? t("offer.creatingRide")
+                  : t("offer.createRideButton")
+              }}
             </button>
           </div>
         </div>
 
         <div>
           <h3 class="text-xl font-medium mb-4 text-gray-700">
-            Your Upcoming Rides
+            {{ t("offer.upcomingRidesHeader") }}
           </h3>
           <div
             v-if="myRides.length === 0"
@@ -179,8 +179,8 @@
                 d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
               />
             </svg>
-            <p>No upcoming rides scheduled.</p>
-            <p class="text-sm mt-1">Create a ride above to get started!</p>
+            <p>{{ t("offer.noUpcomingRides") }}</p>
+            <p class="text-sm mt-1">{{ t("offer.createRideHint") }}</p>
           </div>
           <div v-else class="space-y-4">
             <div
@@ -250,10 +250,12 @@
                     </svg>
                     <span class="text-sm font-medium"
                       >{{
-                        formatCount(identityStore.vehicleSeats - 1, "seat")
+                        formatCount(
+                          identityStore.vehicleSeats - 1,
+                          t("offer.seatsAvailable")
+                        )
                       }}
-                      available</span
-                    >
+                    </span>
                   </div>
                 </div>
               </div>
@@ -273,7 +275,7 @@
                   <div class="ml-4">
                     <span
                       class="text-xs font-medium text-gray-500 uppercase tracking-wide"
-                      >From</span
+                      >{{ t("offer.fromLabel") }}</span
                     >
                     <p class="text-gray-800 font-medium">
                       {{ ride.startAddress }}
@@ -289,7 +291,7 @@
                   <div class="ml-4">
                     <span
                       class="text-xs font-medium text-gray-500 uppercase tracking-wide"
-                      >To</span
+                      >{{ t("offer.toLabel") }}</span
                     >
                     <p class="text-gray-800 font-medium">
                       {{ ride.endAddress }}
@@ -302,7 +304,9 @@
               <div
                 class="mt-4 pt-3 border-t border-gray-100 flex justify-between items-center"
               >
-                <span class="text-xs text-gray-400">Ride #{{ ride.id }}</span>
+                <span class="text-xs text-gray-400"
+                  >{{ t("offer.rideIdLabel") }}{{ ride.id }}</span
+                >
                 <!-- TODO: Add action buttons here -->
               </div>
             </div>
@@ -326,6 +330,9 @@ import {
   getTimeUntilClass,
   formatCount,
 } from "../utils/dateUtils";
+
+import { useI18n } from "vue-i18n";
+const { t } = useI18n();
 
 const router = useRouter();
 const identityStore = useIdentityStore();
