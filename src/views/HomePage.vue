@@ -9,7 +9,7 @@
           <h1
             class="text-A5xl lg:text-7xl font-bold tracking-tight leading-tight text-slate-900"
           >
-            {{ t("heroTitle") }} <br />
+            {{ t("heroTitle1") }} <br />
             <span
               class="text-transparent bg-clip-text bg-gradient-to-r from-electric-blue to-soft-teal"
               >{{ t("heroTitle2") }}</span
@@ -17,7 +17,7 @@
           </h1>
 
           <p class="text-lg lg:text-xl text-slate-500 max-w-lg leading-relaxed">
-            {{ t("heroDescription") }}
+            {{ t("heroSubtitle") }}
           </p>
 
           <div class="flex flex-col sm:flex-row gap-4 pt-4">
@@ -44,7 +44,7 @@
                 {{ displayCount.toLocaleString() }}
               </span>
               <span class="text-slate-500 font-medium">{{
-                t("activeRides")
+                t("activeRidesLabel")
               }}</span>
             </div>
           </div>
@@ -161,7 +161,7 @@
                         {{ t("co2Saved") }}
                       </div>
                       <div class="text-sm text-slate-500">
-                        {{ t("enviromentalImpact") }}
+                        {{ t("environmentalImpact") }}
                       </div>
                     </div>
                   </div>
@@ -196,10 +196,10 @@
             <h2
               class="text-4xl lg:text-5xl font-bold tracking-tight leading-tight text-slate-900"
             >
-              {{ t("becomeDriver") }} <br />
+              {{ t("becomeDriverTitle1") }} <br />
               <span
                 class="text-transparent bg-clip-text bg-gradient-to-r from-electric-blue to-soft-teal"
-                >{{ t("andSave") }}</span
+                >{{ t("becomeDriverTitle2") }}</span
               >
             </h2>
             <p class="text-lg text-slate-500 max-w-lg leading-relaxed">
@@ -210,7 +210,7 @@
                 @click="$router.push('/offer-ride')"
                 class="bg-slate-900 text-white hover:bg-slate-800 px-8 py-4 rounded-xl font-semibold transition-all duration-200 shadow-lg shadow-slate-200 hover:shadow-xl hover:-translate-y-0.5 w-full sm:w-auto"
               >
-                {{ t("startDriving") }}
+                {{ t("startDrivingToday") }}
               </button>
             </div>
           </div>
