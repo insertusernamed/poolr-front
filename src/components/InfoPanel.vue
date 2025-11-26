@@ -89,12 +89,16 @@
 
         <div v-if="routeData" class="stats-card">
             <div class="stat-item">
-                <span class="stat-value">{{ routeData.distanceKm.toFixed(1) }}</span>
+                <span class="stat-value">
+                    {{ selectedRide ? userDistance.toFixed(1) : routeData.distanceKm.toFixed(1) }} km
+                </span>
                 <span class="stat-label">{{ t("infoPanel.kmTotal") }}</span>
             </div>
             <div class="stat-divider"></div>
             <div class="stat-item">
-                <span class="stat-value">{{ Math.round(routeData.durationMinutes) }}</span>
+                <span class="stat-value">
+                    {{ selectedRide ? Math.round(userDuration) : Math.round(routeData.durationMinutes) }} min
+                </span>
                 <span class="stat-label">{{ t("infoPanel.min") }}</span>
             </div>
         </div>
@@ -122,6 +126,16 @@ const selectedRide = computed(() => mapStore.selectedRide)
 const onTransactionPage = computed(() => route.name === 'transaction')
 const hoveredElement = computed(() => mapStore.hoveredElement)
 
+const userDistance = computed(() => {
+    if (!selectedRide.value?.passengerTripDistanceKm) return 0
+    return selectedRide.value.passengerTripDistanceKm
+})
+
+const userDuration = computed(() => {
+    if (!selectedRide.value?.passengerTripDurationMinutes) return 0
+    return selectedRide.value.passengerTripDurationMinutes
+})
+
 const setHover = (type, index) => {
     mapStore.setHoveredElement({ type, index })
 }
@@ -135,7 +149,7 @@ const isHovered = (type, index) => {
 }
 
 const clearPoints = () => {
-  mapStore.clearPoints();
+    mapStore.clearPoints();
 };
 
 const goToTransaction = () => {
@@ -361,9 +375,9 @@ const goToTransaction = () => {
 }
 
 @media (max-width: 768px) {
-  .info-panel {
-    width: 100%;
-    align-self: stretch;
-  }
+    .info-panel {
+        width: 100%;
+        align-self: stretch;
+    }
 }
 </style>

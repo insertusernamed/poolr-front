@@ -165,13 +165,27 @@
         "waypoint": "Point"
     },
     "transactions": {
-        "transaction_routeMap": "Carte de l’itinéraire",
+        "transaction_routeMap": "Carte de l'itinéraire",
         "transaction_confirmRide": "Confirmez votre trajet",
         "transaction_providerNote": "Complétez votre réservation avec PayPal ou une carte de crédit.",
         "transaction_noRideSelected": "Aucun trajet sélectionné",
-        "transaction_pickRideFirst": "Veuillez sélectionner un trajet d’abord",
+        "transaction_pickRideFirst": "Veuillez sélectionner un trajet d'abord",
         "transaction_backToResults": "Retour aux résultats",
         "back": "Retour"
+    },
+    "infoPanel": {
+        "driversOrigin": "Point de départ du conducteur",
+        "pickupRoute": "Trajet de ramassage",
+        "driverToYou": "Conducteur vers vous",
+        "meetHere": "Point de rencontre",
+        "sharedRide": "Trajet partagé",
+        "youAndDriver": "Vous et le conducteur",
+        "destination": "Destination",
+        "driversFinalStop": "Arrêt final du conducteur",
+        "kmTotal": "Distance totale",
+        "min": "Minutes",
+        "clearRoute": "Effacer l'itinéraire",
+        "away": "de distance"
     },
     "tickets": {
         "title": "Vos billets",

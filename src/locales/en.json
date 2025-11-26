@@ -169,7 +169,28 @@
         "noRideSelected": "No ride selected",
         "pickRideFirst": "Please pick a ride first",
         "backToResults": "Back to results",
-        "back": "Back"
+        "back": "Back",
+        "transaction_routeMap": "Route Map",
+        "transaction_confirmRide": "Confirm Your Ride",
+        "transaction_providerNote": "Complete your booking with PayPal or a credit card.",
+        "transaction_noRideSelected": "No ride selected",
+        "transaction_pickRideFirst": "Please pick a ride first",
+        "transaction_backToResults": "Back to results",
+        "transaction_missingOriginDestination": "Origin or destination is missing. Re-select your ride if the map looks off."
+    },
+    "infoPanel": {
+        "driversOrigin": "Driver's Origin",
+        "pickupRoute": "Pickup Route",
+        "driverToYou": "Driver to You",
+        "meetHere": "Meet Here",
+        "sharedRide": "Shared Ride",
+        "youAndDriver": "You & Driver",
+        "destination": "Destination",
+        "driversFinalStop": "Driver's Final Stop",
+        "kmTotal": "Total Distance",
+        "min": "Minutes",
+        "clearRoute": "Clear Route",
+        "away": "away"
     },
     "tickets": {
         "title": "Your Tickets",
