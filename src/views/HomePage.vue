@@ -1,37 +1,43 @@
 <template>
     <div class="min-h-screen bg-white text-slate-900 font-sans selection:bg-electric-blue selection:text-white">
         <!-- Hero Section -->
-        <div class="max-w-7xl mx-auto px-6 pt-12 lg:pt-24 pb-20">
-            <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-                <div class="space-y-8">
-                    <h1 class="text-A5xl lg:text-7xl font-bold tracking-tight leading-tight text-slate-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 pt-8 sm:pt-12 lg:pt-24 pb-12 sm:pb-20">
+            <div class="grid lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-16 items-center">
+                <div class="space-y-6 sm:space-y-8">
+                    <h1 class="text-4xl sm:text-5xl lg:text-7xl font-bold tracking-tight leading-tight text-slate-900">
                         {{ t("heroTitle1") }} <br />
                         <span class="text-transparent bg-clip-text bg-gradient-to-r from-electric-blue to-soft-teal">{{
                             t("heroTitle2") }}</span>
                     </h1>
 
-                    <p class="text-lg lg:text-xl text-slate-500 max-w-lg leading-relaxed">
+                    <p class="text-base sm:text-lg lg:text-xl text-slate-500 max-w-lg leading-relaxed">
                         {{ t("heroSubtitle") }}
                     </p>
 
-                    <div class="flex flex-col sm:flex-row gap-4 pt-4">
+                    <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 pt-2 sm:pt-4">
                         <button @click="$router.push('/find-ride')"
-                            class="bg-slate-900 text-white hover:bg-slate-800 px-8 py-4 rounded-xl font-semibold transition-all duration-200 shadow-lg shadow-slate-200 hover:shadow-xl hover:-translate-y-0.5 w-full sm:w-auto">
+                            class="bg-slate-900 text-white hover:bg-slate-800 px-6 sm:px-8 py-3 sm:py-4 rounded-xl font-semibold transition-all duration-200 shadow-lg shadow-slate-200 hover:shadow-xl hover:-translate-y-0.5 w-full sm:w-auto text-sm sm:text-base">
                             {{ t("findRide") }}
                         </button>
                         <button @click="$router.push('/offer-ride')"
-                            class="bg-white text-slate-900 border border-slate-200 hover:border-slate-300 hover:bg-slate-50 px-8 py-4 rounded-xl font-semibold transition-all duration-200 w-full sm:w-auto">
+                            class="bg-white text-slate-900 border border-slate-200 hover:border-slate-300 hover:bg-slate-50 px-6 sm:px-8 py-3 sm:py-4 rounded-xl font-semibold transition-all duration-200 w-full sm:w-auto text-sm sm:text-base">
                             {{ t("offerRide") }}
                         </button>
                     </div>
 
                     <!-- Stats -->
-                    <div class="pt-8 border-t border-slate-100 mt-8">
-                        <div class="flex items-baseline gap-3">
-                            <span class="text-4xl lg:text-5xl font-bold tracking-tighter tabular-nums text-slate-900">
-                                {{ displayCount.toLocaleString() }}
-                            </span>
-                            <span class="text-slate-500 font-medium">{{
+                    <div class="pt-6 sm:pt-8 border-t border-slate-100 mt-6 sm:mt-8">
+                        <div class="flex items-baseline gap-2 sm:gap-3">
+                            <template v-if="isLoading">
+                                <div class="h-10 sm:h-12 w-20 sm:w-24 bg-slate-200 rounded-lg animate-pulse"></div>
+                            </template>
+                            <template v-else>
+                                <span
+                                    class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tighter tabular-nums text-slate-900">
+                                    {{ displayCount.toLocaleString() }}
+                                </span>
+                            </template>
+                            <span class="text-sm sm:text-base text-slate-500 font-medium">{{
                                 t("activeRidesLabel")
                                 }}</span>
                         </div>
@@ -89,9 +95,9 @@
             </div>
         </div>
 
-        <div class="bg-slate-50 py-24">
-            <div class="max-w-7xl mx-auto px-6">
-                <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+        <div class="bg-slate-50 py-12 sm:py-16 lg:py-24">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6">
+                <div class="grid lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-16 items-center">
                     <div class="relative hidden lg:block">
                         <div
                             class="absolute -inset-4 bg-gradient-to-r from-emerald-100 to-teal-100 rounded-[2rem] blur-3xl opacity-30">
@@ -158,19 +164,20 @@
                         </div>
                     </div>
 
-                    <div class="space-y-8">
-                        <h2 class="text-4xl lg:text-5xl font-bold tracking-tight leading-tight text-slate-900">
+                    <div class="space-y-6 sm:space-y-8">
+                        <h2
+                            class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-tight text-slate-900">
                             {{ t("becomeDriverTitle1") }} <br />
                             <span
                                 class="text-transparent bg-clip-text bg-gradient-to-r from-electric-blue to-soft-teal">{{
-                                t("becomeDriverTitle2") }}</span>
+                                    t("becomeDriverTitle2") }}</span>
                         </h2>
-                        <p class="text-lg text-slate-500 max-w-lg leading-relaxed">
+                        <p class="text-base sm:text-lg text-slate-500 max-w-lg leading-relaxed">
                             {{ t("driverDescription") }}
                         </p>
-                        <div class="pt-4">
+                        <div class="pt-2 sm:pt-4">
                             <button @click="$router.push('/offer-ride')"
-                                class="bg-slate-900 text-white hover:bg-slate-800 px-8 py-4 rounded-xl font-semibold transition-all duration-200 shadow-lg shadow-slate-200 hover:shadow-xl hover:-translate-y-0.5 w-full sm:w-auto">
+                                class="bg-slate-900 text-white hover:bg-slate-800 px-6 sm:px-8 py-3 sm:py-4 rounded-xl font-semibold transition-all duration-200 shadow-lg shadow-slate-200 hover:shadow-xl hover:-translate-y-0.5 w-full sm:w-auto text-sm sm:text-base">
                                 {{ t("startDrivingToday") }}
                             </button>
                         </div>
@@ -190,6 +197,7 @@ const { t } = useI18n();
 
 const rideCount = ref(0);
 const displayCount = ref(0);
+const isLoading = ref(true);
 let pollingInterval = null;
 
 const fetchRideCount = async () => {
@@ -198,6 +206,8 @@ const fetchRideCount = async () => {
         rideCount.value = response.data;
     } catch (error) {
         console.error("Failed to fetch ride count:", error);
+    } finally {
+        isLoading.value = false;
     }
 };
 
