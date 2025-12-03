@@ -124,17 +124,37 @@ const router = createRouter({
     ],
 });
 
+function isTokenExpired(token) {
+    if (!token) return true;
+    try {
+        const payload = JSON.parse(atob(token.split('.')[1]));
+        // Checking if token has an expiration claim and if it's expired
+        if (payload.exp) {
+            return Date.now() >= payload.exp * 1000;
+        }
+        return false; // No exp claim so we consider it valid
+    } catch {
+        return true; // Invalid token format
+    }
+}
+
 router.beforeEach((to, _from, next) => {
     document.title = `Poolr - ${to.meta.title}`;
     const token = localStorage.getItem('token');
+    const isValidToken = token && !isTokenExpired(token);
+
+    // Clearing expired tokens
+    if (token && isTokenExpired(token)) {
+        localStorage.removeItem('token');
+    }
 
     // Redirect unauthenticated users away from protected pages
-    if (to.meta.requiresAuth && !token) {
+    if (to.meta.requiresAuth && !isValidToken) {
         return next({ name: 'login' });
     }
 
     // Redirect logged-in users away from guest-only pages (login/register)
-    if (to.meta.requiresGuest && token) {
+    if (to.meta.requiresGuest && isValidToken) {
         return next({ name: 'home' });
     }
 
