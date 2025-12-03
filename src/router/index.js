@@ -13,6 +13,8 @@ import TransactionPage from "../views/TransactionPage.vue";
 import SettingsPage from "../views/SettingsPage.vue";
 import RideHistoryPage from "../views/RideHistoryPage.vue";
 import TicketsPage from "../views/TicketsPage.vue";
+import PrivacyPage from "../views/PrivacyPage.vue";
+import TermsPage from "../views/TermsPage.vue";
 
 const router = createRouter({
     history: createWebHistory(),
@@ -114,6 +116,18 @@ const router = createRouter({
                     meta: { title: "Ride History", requiresAuth: true },
                 },
             ],
+        },
+        {
+            path: "/privacy",
+            name: "privacy",
+            component: PrivacyPage,
+            meta: { title: "Privacy Policy" },
+        },
+        {
+            path: "/terms",
+            name: "terms",
+            component: TermsPage,
+            meta: { title: "Terms of Service" },
         },
         {
             path: "/:pathMatch(.*)*",
