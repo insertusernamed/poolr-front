@@ -24,11 +24,11 @@
             </li>
             <li class="info-only">
                 <span>{{ t("pricing.platformFee") }} <small>(18%, {{ t("pricing.paidByDriver") }})</small></span>
-                <span class="not-charged">—</span>
+                <span class="not-charged">-</span>
             </li>
             <li class="info-only">
                 <span>{{ t("pricing.paymentProcessing") }} <small>($0.35, {{ t("pricing.paidByDriver") }})</small></span>
-                <span class="not-charged">—</span>
+                <span class="not-charged">-</span>
             </li>
             <li v-if="pricing.tipAmount > 0">
                 <span>{{ t("pricing.tip") }} <small>({{ t("pricing.goesToDriver") }})</small></span>

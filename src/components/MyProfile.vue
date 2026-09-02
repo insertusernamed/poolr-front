@@ -204,7 +204,10 @@ const submitForm = async () => {
         if (response.status != 200) throw new Error(t("update_failed"));
 
         console.log(response);
-        localStorage.setItem("token", response.data.token);
+        // only overwrite the token if the backend actually returned a new one
+        if (response.data?.token) {
+            localStorage.setItem("token", response.data.token);
+        }
         refreshUserData();
     } catch (err) {
         console.error(err);

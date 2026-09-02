@@ -217,6 +217,7 @@ import {
     getTimeUntilClass,
     formatCount,
 } from "../utils/dateUtils";
+import { showToast } from "../utils/BaseToast";
 
 import { useI18n } from "vue-i18n";
 const { t } = useI18n();
@@ -327,7 +328,7 @@ const createRide = async () => {
         refreshKey.value++;
     } catch (error) {
         console.error("Failed to create ride", error);
-        alert("Failed to create ride. Please try again.");
+        showToast(t("offer.createRideError"), "error");
     } finally {
         isCreating.value = false;
     }

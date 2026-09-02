@@ -3,8 +3,9 @@
         <div class="map-section">
             <l-map ref="map" :zoom="zoom" :center="center" @click="onMapClick" class="map"
                 :aria-label="t('routePlannerPage.mapAriaLabel')">
-                <l-tile-layer :url="'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png'"
-                    :attribution="attribution" :subdomains="'abcd'" :max-zoom="20" />
+                <!-- OSM raster tiles: free, no API key -->
+                <l-tile-layer :url="'https://tile.openstreetmap.org/{z}/{x}/{y}.png'"
+                    :attribution="attribution" :max-zoom="19" />
 
                 <!-- Polygon for available routing area -->
                 <l-polygon :lat-lngs="routingAreaPolygon" :color="'#FF0000FF'" :weight="2" :fill="false">
@@ -29,7 +30,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, nextTick, watch } from 'vue'
+import { ref, computed, onMounted, onBeforeUnmount, nextTick, watch } from 'vue'
 import { LMap, LTileLayer, LMarker, LPolyline, LPopup, LPolygon } from '@vue-leaflet/vue-leaflet'
 import 'leaflet/dist/leaflet.css'
 import L from 'leaflet'
@@ -50,28 +51,87 @@ const center = ref([44.6087, -79.4207]); // orillia
 
 // Attribution string
 const attribution = ref(
-  '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+  '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 );
 
-// Fix map size after mounting
+// Keep the Leaflet canvas in sync with its container size
+let resizeObserver = null;
+let sizeSettleTimer = null;
+
+const invalidateMapSize = () => {
+  if (map.value && map.value.leafletObject) {
+    map.value.leafletObject.invalidateSize();
+  }
+};
+
+const refitRoute = () => {
+  if (routeData.value || waypoints.value.length > 0) {
+    fitRouteBounds();
+  }
+};
+
 onMounted(() => {
   nextTick(() => {
-    if (map.value && map.value.leafletObject) {
-      setTimeout(() => {
-        map.value.leafletObject.invalidateSize();
-      }, 100);
+    // initial settle
+    sizeSettleTimer = setTimeout(() => {
+      invalidateMapSize();
+      refitRoute();
+    }, 100);
+
+    // watch container size changes (desktop resize, mobile rotation, late layout)
+    const container = map.value?.$el || document.querySelector('.map-section');
+    if (container && typeof ResizeObserver !== 'undefined') {
+      resizeObserver = new ResizeObserver(() => {
+        invalidateMapSize();
+      });
+      resizeObserver.observe(container);
     }
+
+    window.addEventListener('resize', invalidateMapSize);
+    window.addEventListener('orientationchange', handleOrientationChange);
   });
 });
+
+onBeforeUnmount(() => {
+  if (resizeObserver) {
+    resizeObserver.disconnect();
+    resizeObserver = null;
+  }
+  if (sizeSettleTimer) {
+    clearTimeout(sizeSettleTimer);
+    sizeSettleTimer = null;
+  }
+  window.removeEventListener('resize', invalidateMapSize);
+  window.removeEventListener('orientationchange', handleOrientationChange);
+});
+
+const handleOrientationChange = () => {
+  // give the viewport a moment to settle after rotation, then re-fit the route
+  setTimeout(() => {
+    invalidateMapSize();
+    refitRoute();
+  }, 350);
+};
 
 watch(routeData, (newRouteData) => {
   if (newRouteData) {
     nextTick(() => {
       setTimeout(() => {
+        invalidateMapSize();
         fitRouteBounds();
       }, 200);
     });
   }
+});
+
+// also fit when waypoints change without new route data
+watch(waypoints, () => {
+  nextTick(() => {
+    setTimeout(() => {
+      invalidateMapSize();
+      if (!routeData.value) refitRoute();
+    }, 200);
+  });
 });
 
 const hoveredElement = computed(() => mapStore.hoveredElement)
@@ -94,14 +154,14 @@ const markers = computed(() => {
 const routeSegments = computed(() => {
   if (!routeData.value || !routeData.value.segments) return [];
 
-  // Modern colors for route segments
-  const colors = ['#3B82F6', '#10B981'] // Blue for segment 1->2, Emerald for segment 2->3
+// Segment colors: A→B (driver comes to you) then B→C (shared ride)
+const colors = ['#3B82F6', '#10B981']
 
     return routeData.value.segments.map((segmentCoords, index) => {
         const isHovered = hoveredElement.value?.type === 'segment' && hoveredElement.value?.index === index
         return {
             coordinates: segmentCoords,
-            color: colors[index] || '#6366F1', // Fallback to Indigo
+            color: colors[index] || '#6366F1',
             weight: isHovered ? 8 : 5,
             opacity: isHovered ? 1 : 0.7
         }
@@ -125,8 +185,8 @@ const onMapClick = (event) => {
 const getMarkerColor = (index) => {
     const mapStore = useMapStore()
     if (mapStore.selectedRide) {
-        // Ride start (green), User pickup (blue), User destination (orange), Ride end (red)
-        const colors = ['#10B981', '#3B82F6', '#F59E0B', '#EF4444']
+        // Ride start (green), User pickup (blue), User destination (orange)
+        const colors = ['#10B981', '#3B82F6', '#F59E0B']
         return colors[index] || '#6B7280'
     }
     const colors = ['#10B981', '#F59E0B', '#EF4444']
@@ -136,7 +196,7 @@ const getMarkerColor = (index) => {
 // Helper to get marker icon (Custom DivIcon)
 const getMarkerIcon = (color, index) => {
     // Create a modern circular marker with a letter or number
-    const labels = ['A', 'B', 'C', 'D']
+    const labels = ['A', 'B', 'C']
     const label = labels[index] || (index + 1).toString()
 
     const isHovered = hoveredElement.value?.type === 'marker' && hoveredElement.value?.index === index
@@ -230,6 +290,10 @@ defineExpose({
 .map {
   width: 100%;
   height: 100%;
+  /* stop the page itself from pinch-zooming/scrolling when gesturing on the map (iOS) */
+  touch-action: none;
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 @media (max-width: 768px) {
@@ -241,10 +305,15 @@ defineExpose({
     gap: 10px;
   }
 
+  /*
+   * The map section needs a definite height on mobile or the inner
+   * height: 100% collapses to 0px.
+   */
   .map-section {
     height: 50vh;
     min-height: 300px;
     width: 100%;
+    flex: 0 0 auto;
   }
 }
 </style>

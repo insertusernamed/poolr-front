@@ -27,7 +27,11 @@
 
                 <RideSummary :ride="selectedRide" :route-data="routeData" />
                 <FareBreakdown v-if="pricing" :pricing="pricing" />
-                <PayPalPayment :is-authenticated="isAuthenticated" :pricing="pricing"
+                <div v-else class="pricing-unavailable">
+                    <p>{{ t("transactions.pricingUnavailable") }}</p>
+                    <button class="back-btn" @click="goBack">{{ t("transactions.back") }}</button>
+                </div>
+                <PayPalPayment v-if="pricing" :is-authenticated="isAuthenticated" :pricing="pricing"
                     :ride-name="selectedRide.driverName" @login="goToLogin" />
 
                 <div class="actions">
@@ -173,6 +177,20 @@ onMounted(async () => {
   margin-top: 24px;
   display: flex;
   justify-content: flex-start;
+}
+
+.pricing-unavailable {
+  margin-top: 20px;
+  padding: 16px;
+  border: 1px dashed #f59e0b;
+  background: #fffbeb;
+  border-radius: 12px;
+  color: #92400e;
+  font-size: 14px;
+}
+
+.pricing-unavailable .back-btn {
+  margin-top: 10px;
 }
 
 .back-btn {

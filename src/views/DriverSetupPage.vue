@@ -338,7 +338,10 @@ const continueToDriverPage = async () => {
     if (response.status != 200)
       throw new Error("Failed to update user information");
     console.log(response);
-    localStorage.setItem("token", response.data.token);
+    // only overwrite the token if the backend actually returned a new one
+    if (response.data?.token) {
+        localStorage.setItem("token", response.data.token);
+    }
 
     router.push("/offer-ride");
   } catch (err) {

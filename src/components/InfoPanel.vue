@@ -75,15 +75,6 @@
                         <span class="subtitle">{{ t("infoPanel.destination") }}</span>
                     </div>
                 </div>
-
-                <div class="legend-item" @mouseenter="setHover('marker', 3)" @mouseleave="clearHover"
-                    :class="{ active: isHovered('marker', 3) }">
-                    <div class="marker-icon end">D</div>
-                    <div class="legend-text">
-                        <span class="title">{{ t("rideEnd") }}</span>
-                        <span class="subtitle">{{ t("infoPanel.driversFinalStop") }}</span>
-                    </div>
-                </div>
             </div>
         </div>
 
@@ -267,10 +258,6 @@ const goToTransaction = () => {
 
 .marker-icon.dropoff {
     background-color: #F59E0B;
-}
-
-.marker-icon.end {
-    background-color: #EF4444;
 }
 
 .line-icon {

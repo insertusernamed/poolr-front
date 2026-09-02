@@ -1,5 +1,6 @@
 <template>
     <div class="ride-summary">
+        <h3 class="summary-title">{{ t("rideSummary.title") }}</h3>
         <div class="summary-row">
             <span class="label">{{ t("rideSummary.driver") }}</span>
             <span class="value">{{ ride.driverName }}</span>
@@ -53,6 +54,13 @@ defineProps({
     background: #f9fafb;
 }
 
+.summary-title {
+    margin: 0 0 12px;
+    font-size: 16px;
+    font-weight: 700;
+    color: #111827;
+}
+
 .summary-row {
     display: flex;
     justify-content: space-between;
@@ -68,5 +76,18 @@ defineProps({
 
 .summary-row .label {
     font-weight: 600;
+}
+
+@media (max-width: 640px) {
+    .summary-row {
+        /* stack label above value so long addresses don't wrap one word per line */
+        flex-direction: column;
+        gap: 2px;
+    }
+
+    .summary-row .value {
+        text-align: left;
+        word-break: break-word;
+    }
 }
 </style>

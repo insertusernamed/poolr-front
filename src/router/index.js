@@ -95,6 +95,7 @@ const router = createRouter({
             path: "/settings",
             name: "settings",
             component: SettingsPage,
+            redirect: { name: "settingsProfile" },
             meta: { title: "Settings", requiresAuth: false },
             children: [
                 {

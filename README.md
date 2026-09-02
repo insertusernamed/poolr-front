@@ -32,11 +32,18 @@ Poolr is a proof-of-concept carpooling application developed as a university gro
 ### Configuration
 The application requires a `.env` file in the root directory to connect to the backend services.
 
-Create a `.env` file:
-```env
-VITE_API_BASE_URL=http://localhost:8080
-VITE_PAYPAL_CLIENT_ID=your_sandbox_client_id
+Copy the example file and adjust it:
+```bash
+cp .env.example .env
 ```
+
+```env
+# Leave empty to use the vite dev proxy (proxies /api/* to the backend),
+# or set the full base URL of a backend, e.g. https://your-backend-host/poolr
+VITE_API_BASE_URL=
+```
+
+> **Note:** PayPal credentials are configured on the **backend** (`PAYPAL_CLIENT_ID` / `PAYPAL_CLIENT_SECRET`), not here. The frontend fetches the public client-id from `/api/payments/paypal/config` at runtime.
 
 ### Installation
 Install the project dependencies:

@@ -175,6 +175,8 @@ const findRide = async () => {
     if (!origin.value || !destination.value) return;
 
     isSearching.value = true;
+    // drop any previous selection so a new search starts clean
+    mapStore.clearPoints();
     try {
         showToast(t("toast_searchingRides"), "info");
         const rides = await mapStore.fetchNearbyRides(
@@ -190,6 +192,7 @@ const findRide = async () => {
             router.push("/ride-results");
         }
     } catch (error) {
+        // specific routing/unroutable-point messaging is surfaced by mapStore toasts
     } finally {
         isSearching.value = false;
     }

@@ -37,6 +37,9 @@
     "toast_searchingRides": "Searching for available rides...",
     "toast_noRides": "No rides found nearby",
     "toast_foundRides": "Rides found",
+    "toast_searchError": "Failed to search for rides. Please try again.",
+    "toast_routeError": "Failed to calculate route. Please try again.",
+    "toast_routablePointError": "One of your points isn't near a road. Try adjusting your pickup or destination.",
     "toast_error": "An error occurred",
     "404_title": "Oops! Lost in the Pool?",
     "404_message": "Sorry, the ride you're looking for doesn't exist. Let's get you back on track!",
@@ -143,13 +146,16 @@
         "away": "away",
         "subtotal": "Subtotal",
         "useThisRide": "Use This Ride",
+        "viewRide": "View this ride",
         "departed": "Departed",
         "leavesInHours": "Leaves in {hours} hour(s)",
         "leavesInMinutes": "Leaves in {minutes} minute(s)",
         "trip": "trip",
-        "detourForDriver": "detour for driver"
+        "detourForDriver": "detour for driver",
+        "detourUnknown": "detour unavailable"
     },
     "rideSummary": {
+        "title": "Ride Summary",
         "driver": "Driver",
         "vehicle": "Vehicle",
         "pickup": "Pickup",
@@ -163,6 +169,7 @@
         "waypoint": "Waypoint"
     },
     "transactions": {
+        "pricingUnavailable": "Fare details are unavailable for this ride. Please go back and pick a ride again.",
         "routeMap": "Route Map",
         "confirmRide": "Confirm Your Ride",
         "providerNote": "Complete your booking with PayPal or a credit card.",
@@ -196,6 +203,13 @@
         "title": "Your Tickets",
         "loading": "Loading tickets...",
         "empty": "You have no tickets yet.",
+        "noTicketsYet": "No tickets yet",
+        "emptyHint": "Ready to hit the road? Book a ride now to see your upcoming trips and ticket details here.",
+        "bookARide": "Book a Ride",
+        "upcoming": "Upcoming",
+        "from": "From",
+        "to": "To",
+        "distance": "Distance",
         "ticketNumber": "Ticket #{{id}}",
         "confirmationCode": "Confirmation code",
         "driver": "Driver",
@@ -205,6 +219,7 @@
         "unknown": "Unknown"
     },
     "offer": {
+        "createRideError": "Failed to create ride. Please try again.",
         "loading": "Loading...",
         "startHeader": "Start Offering Rides",
         "startMessage": "Looking to help others in their commute?",

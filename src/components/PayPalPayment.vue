@@ -172,9 +172,17 @@ const renderButtons = async () => {
 watch(() => props.pricing?.grossAmount, renderButtons);
 watch(paypalConfig, renderButtons);
 
+// never contact the payments API when unauthenticated
 onMounted(async () => {
+    if (!props.isAuthenticated) return;
     await fetchPaypalConfig();
-    if (props.isAuthenticated) {
+    await renderButtons();
+});
+
+// fetch config after sign-in if the page was mounted logged out
+watch(() => props.isAuthenticated, async (authed) => {
+    if (authed && !paypalConfig.value) {
+        await fetchPaypalConfig();
         await renderButtons();
     }
 });

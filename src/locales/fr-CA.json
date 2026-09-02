@@ -2,6 +2,8 @@
     "settings": "Paramètres",
     "profile": "Profil",
     "rideHistory": "Historique des trajets",
+    "rideHistoryEmpty": "Vous n'avez pas encore réservé de trajet.",
+    "rideHistoryError": "Échec du chargement de l'historique des trajets.",
     "goToRideHistory": "Aller à l’historique des trajets",
     "theme": "Thème",
     "language": "Langue",
@@ -38,6 +40,9 @@
     "toast_searchingRides": "Recherche de trajets disponibles...",
     "toast_noRides": "Aucun trajet trouvé à proximité",
     "toast_foundRides": "Trajets trouvés",
+    "toast_searchError": "Échec de la recherche de trajets. Veuillez réessayer.",
+    "toast_routeError": "Échec du calcul de l'itinéraire. Veuillez réessayer.",
+    "toast_routablePointError": "L'un de vos points n'est pas près d'une route. Essayez d'ajuster votre départ ou votre destination.",
     "toast_error": "Une erreur s’est produite",
     "404_title": "Oups! Perdu dans la piscine?",
     "404_message": "Désolé, le trajet que vous cherchez n’existe pas. Revenons sur la bonne voie!",
@@ -145,13 +150,16 @@
         "away": "de distance",
         "subtotal": "Sous-total",
         "useThisRide": "Choisir ce trajet",
+        "viewRide": "Voir ce trajet",
         "departed": "Déjà parti",
         "leavesInHours": "Part dans {hours} heure(s)",
         "leavesInMinutes": "Part dans {minutes} minute(s)",
         "trip": "trajet",
-        "detourForDriver": "détour pour le conducteur"
+        "detourForDriver": "détour pour le conducteur",
+        "detourUnknown": "détour indisponible"
     },
     "rideSummary": {
+        "title": "Résumé du trajet",
         "driver": "Conducteur",
         "vehicle": "Véhicule",
         "pickup": "Point de départ",
@@ -165,6 +173,7 @@
         "waypoint": "Point"
     },
     "transactions": {
+        "pricingUnavailable": "Les détails du tarif ne sont pas disponibles pour ce trajet. Veuillez revenir en arrière et choisir un trajet à nouveau.",
         "transaction_routeMap": "Carte de l'itinéraire",
         "transaction_confirmRide": "Confirmez votre trajet",
         "transaction_providerNote": "Complétez votre réservation avec PayPal ou une carte de crédit.",
@@ -191,6 +200,13 @@
         "title": "Vos billets",
         "loading": "Chargement des billets...",
         "empty": "Vous n'avez encore aucun billet.",
+        "noTicketsYet": "Aucun billet pour le moment",
+        "emptyHint": "Prêt à prendre la route ? Réservez un trajet pour voir vos voyages à venir et leurs détails ici.",
+        "bookARide": "Réserver un trajet",
+        "upcoming": "à venir",
+        "from": "Départ",
+        "to": "Arrivée",
+        "distance": "Distance",
         "ticketNumber": "Billet #{{id}}",
         "confirmationCode": "Code de confirmation",
         "driver": "Conducteur",
@@ -200,6 +216,7 @@
         "unknown": "Inconnu"
     },
     "offer": {
+        "createRideError": "Échec de la création du trajet. Veuillez réessayer.",
         "loading": "Chargement...",
         "startHeader": "Commencer à offrir des trajets",
         "startMessage": "Vous souhaitez aider les autres dans leur trajet quotidien ?",
