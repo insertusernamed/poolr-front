@@ -1,20 +1,23 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomePage from "../views/HomePage.vue";
-import OfferRidePage from "../views/OfferRidePage.vue";
-import DriverSetupPage from "../views/DriverSetupPage.vue";
-import FindRidePage from "../views/FindRidePage.vue";
-import AboutPage from "../views/AboutPage.vue";
-import AuthPage from "../views/AuthPage.vue";
-import MapPage from "../views/MapPage.vue";
-import ErrorPage from "../views/ErrorPage.vue";
-import MyProfilePage from "../views/MyProfilePage.vue";
-import RideDetailsPage from "../views/RideDetailsPage.vue";
-import TransactionPage from "../views/TransactionPage.vue";
-import SettingsPage from "../views/SettingsPage.vue";
-import RideHistoryPage from "../views/RideHistoryPage.vue";
-import TicketsPage from "../views/TicketsPage.vue";
-import PrivacyPage from "../views/PrivacyPage.vue";
-import TermsPage from "../views/TermsPage.vue";
+
+// lazy-load every other page so the initial bundle stays small;
+// vite splits each into its own chunk fetched on first visit
+const OfferRidePage = () => import("../views/OfferRidePage.vue");
+const DriverSetupPage = () => import("../views/DriverSetupPage.vue");
+const FindRidePage = () => import("../views/FindRidePage.vue");
+const AboutPage = () => import("../views/AboutPage.vue");
+const AuthPage = () => import("../views/AuthPage.vue");
+const MapPage = () => import("../views/MapPage.vue");
+const ErrorPage = () => import("../views/ErrorPage.vue");
+const MyProfilePage = () => import("../views/MyProfilePage.vue");
+const RideDetailsPage = () => import("../views/RideDetailsPage.vue");
+const TransactionPage = () => import("../views/TransactionPage.vue");
+const SettingsPage = () => import("../views/SettingsPage.vue");
+const RideHistoryPage = () => import("../views/RideHistoryPage.vue");
+const TicketsPage = () => import("../views/TicketsPage.vue");
+const PrivacyPage = () => import("../views/PrivacyPage.vue");
+const TermsPage = () => import("../views/TermsPage.vue");
 
 const router = createRouter({
     history: createWebHistory(),

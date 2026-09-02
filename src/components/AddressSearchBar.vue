@@ -2,6 +2,7 @@
   <div class="relative w-full">
     <div class="relative">
       <input
+        ref="inputEl"
         v-model="searchQuery"
         @input="handleInput"
         @focus="handleFocus"
@@ -239,16 +240,19 @@ const searchQuery = ref("");
 const suggestions = ref([]);
 const isFocused = ref(false);
 const highlightedIndex = ref(-1);
+// per-instance state: the store is shared, so keeping these there made one
+// search bar show the other's spinner and errors
+const isLoading = ref(false);
+const error = ref(null);
+const inputEl = ref(null);
 let debounceTimer = null;
 
 const showSuggestions = computed(() => {
   return isFocused.value && searchQuery.value.length >= props.minChars;
 });
-const isLoading = computed(() => addressStore.isLoading);
-const error = computed(() => addressStore.error);
 
 const handleInput = () => {
-  addressStore.clearError();
+  error.value = null;
   highlightedIndex.value = -1;
 
   if (searchQuery.value.length < props.minChars) {
@@ -267,6 +271,9 @@ const handleInput = () => {
 const fetchAddresses = async () => {
   if (searchQuery.value.length < props.minChars) return;
 
+  isLoading.value = true;
+  error.value = null;
+
   try {
     const results = await addressStore.searchAddresses(
       searchQuery.value,
@@ -277,6 +284,10 @@ const fetchAddresses = async () => {
     suggestions.value = results;
   } catch (err) {
     suggestions.value = [];
+    error.value =
+      err.response?.data?.message || "Something went wrong, please try again";
+  } finally {
+    isLoading.value = false;
   }
 };
 
@@ -284,7 +295,6 @@ const selectAddress = (address) => {
   searchQuery.value = getPrimaryText(address);
   suggestions.value = [];
   highlightedIndex.value = -1;
-  addressStore.setSelectedAddress(address);
   emit("select", address);
   emit("update:modelValue", address);
   isFocused.value = false;
@@ -294,7 +304,8 @@ const handleFocus = () => {
   isFocused.value = true;
   if (
     searchQuery.value.length >= props.minChars &&
-    suggestions.value.length === 0
+    suggestions.value.length === 0 &&
+    !isLoading.value
   ) {
     fetchAddresses();
   }
@@ -391,6 +402,6 @@ watch(
 
 defineExpose({
   clear: clearSearch,
-  focus: () => document.querySelector("input").focus(),
+  focus: () => inputEl.value?.focus(),
 });
 </script>

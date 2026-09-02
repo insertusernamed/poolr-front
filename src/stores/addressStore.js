@@ -3,51 +3,40 @@ import apiClient from '../utils/apiClient'
 
 export const useAddressStore = defineStore('address', {
     state: () => ({
-        selectedAddress: null,
         origin: null,
         destination: null,
-        isLoading: false,
-        error: null
+        // bumped on every search; responses from older searches are discarded
+        // so a slow earlier request can never overwrite a newer one's results
+        searchRequestId: 0
     }),
     actions: {
         async searchAddresses(query, limit = 10, userLat = null, userLon = null) {
-            this.isLoading = true
-            this.error = null
+            const requestId = ++this.searchRequestId
+
+            const params = { query, limit }
+            if (userLat !== null && userLon !== null) {
+                params.userLat = userLat
+                params.userLon = userLon
+            }
 
             try {
-                const params = { query, limit }
-                if (userLat !== null && userLon !== null) {
-                    params.userLat = userLat
-                    params.userLon = userLon
-                }
-
                 const response = await apiClient.get('/api/search/autocomplete', {
                     params
                 })
 
-                const results = response.data
+                // a newer search has started, these results are outdated
+                if (requestId !== this.searchRequestId) {
+                    return []
+                }
 
-                return results
-            } catch (err) {
-                this.error = err.response?.data?.message || 'Failed to fetch addresses'
-                throw err
-            } finally {
-                this.isLoading = false
-            }
-        },
-
-        async getAddressById(id) {
-            try {
-                const response = await apiClient.get(`/api/search/${id}`)
                 return response.data
             } catch (err) {
-                this.error = 'Failed to fetch address details'
-                throw err
+                if (requestId === this.searchRequestId) {
+                    throw err
+                }
+                // superseded request, swallow its error
+                return []
             }
-        },
-
-        setSelectedAddress(address) {
-            this.selectedAddress = address
         },
 
         setOrigin(address) {
@@ -64,10 +53,6 @@ export const useAddressStore = defineStore('address', {
 
         clearDestination() {
             this.destination = null
-        },
-
-        clearError() {
-            this.error = null
         }
     }
 })
